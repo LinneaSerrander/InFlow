@@ -9,7 +9,7 @@
 
 // The web app URL from Apps Script: Deploy → Manage deployments → Web app URL.
 // Empty = forms aren't connected yet (visitors get a message to email instead).
-const FORM_ENDPOINT = "";
+const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbyBRfKoKymbiXR5h_CAVGIa7G6J7QbaINCu0GAEIJhaShtrzDvIQm0omQAjFQOdIVuS/exec";
 
 const CONTACT_EMAIL = "info@inflow.se";
 
