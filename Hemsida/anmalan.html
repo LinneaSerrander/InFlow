@@ -35,8 +35,14 @@
           <h1>Intresseanmälan</h1>
           <p>How to sign up for a course.</p>
         </div>
-        <!-- Form is not wired up yet: set an action (e.g. Formspree/Netlify) when ready -->
-        <form class="form form--wide" onsubmit="return false;">
+        <!-- Sent by js/forms.js to the Google Sheet (receiver: InFlow/google-script/formular.gs) -->
+        <form class="form form--wide" data-form="anmalan"
+              data-success="Tack för din intresseanmälan! Vi har tagit emot den och hör av oss så snart vi kan.">
+          <!-- Spam trap: hidden from people, bots fill it in. Leave it empty. -->
+          <div class="form__trap" aria-hidden="true">
+            <label>Lämna tomt <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+          </div>
+
           <label>För- och efternamn på deltagare
             <input type="text" name="participant_name" autocomplete="off" required>
           </label>
@@ -89,6 +95,11 @@
             <textarea name="message" rows="5"></textarea>
           </label>
 
+          <label class="form__check">
+            <input type="checkbox" name="privacy_consent" value="ja" required>
+            <span>Jag har läst <a href="integritetspolicy.html" target="_blank">integritetspolicyn</a> och godkänner att InFlow sparar uppgifterna för att hantera anmälan.</span>
+          </label>
+
           <button class="btn btn--primary" type="submit">Skicka intresseanmälan</button>
         </form>
       </div>
@@ -97,7 +108,7 @@
 
   <footer class="site-footer">
     <div class="container">
-      <p>&copy; <span data-year></span> InFlow</p>
+      <p>&copy; <span data-year></span> InFlow · <a href="integritetspolicy.html">Integritetspolicy</a></p>
       <div class="footer__links">
         <a href="mailto:info@inflow.se">info@inflow.se</a>
         <!-- Replace the hrefs with InFlow's real profile URLs -->
@@ -121,5 +132,6 @@
   <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
   <script src="js/courses.js"></script>
   <script src="js/signup.js"></script>
+  <script src="js/forms.js"></script>
 </body>
 </html>

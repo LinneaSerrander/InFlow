@@ -287,6 +287,83 @@
   color: var(--color-text-muted);
 }
 
+/* Long text pages (e.g. integritetspolicy.html) */
+.prose {
+  max-width: 44rem;
+}
+
+.prose h2 {
+  margin-top: var(--space-5);
+  margin-bottom: var(--space-2);
+}
+
+.prose p,
+.prose ul {
+  margin-bottom: var(--space-3);
+}
+
+.prose ul {
+  padding-left: var(--space-4);
+}
+
+.prose li + li {
+  margin-top: var(--space-1);
+}
+
+.prose__lead {
+  margin-top: var(--space-2);
+  font-size: var(--text-lg);
+}
+
+/* Links inside running text: the text color, underlined, so they stay
+   readable whatever --color-primary is */
+.prose a,
+.form__note a,
+.form__check a {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+/* Spam trap (honeypot): moved off-screen so people never see or tab to it */
+.form__trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.form__note {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+}
+
+/* Message after sending (or failing to send) a form */
+.form-status {
+  max-width: 44rem;
+  padding: var(--space-3) var(--space-4);
+  font-weight: 500;
+  border-radius: var(--radius);
+  border-left: 4px solid;
+}
+
+.form-status--success {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-secondary);
+}
+
+.form-status--error {
+  background: #fdecec;
+  color: #7f1d1d;
+  border-color: var(--color-danger);
+}
+
+.form-status:focus {
+  outline: none;
+}
+
 .form label.form__check {
   display: flex;
   align-items: flex-start;

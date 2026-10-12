@@ -36,8 +36,14 @@
           <p>För att kontakta oss på InFlow, använd formuläret nedan eller mejla direkt till:<br>
           <a href="mailto:info@inflow.se">info@inflow.se</a></p>
         </div>
-        <!-- Form is not wired up yet: set an action (e.g. Formspree/Netlify) when ready -->
-        <form class="form" onsubmit="return false;">
+        <!-- Sent by js/forms.js to the Google Sheet (receiver: InFlow/google-script/formular.gs) -->
+        <form class="form" data-form="kontakt"
+              data-success="Tack för ditt meddelande! Vi svarar så snart vi kan.">
+          <!-- Spam trap: hidden from people, bots fill it in. Leave it empty. -->
+          <div class="form__trap" aria-hidden="true">
+            <label>Lämna tomt <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+          </div>
+
           <label>Namn
             <input type="text" name="name" autocomplete="name" required>
           </label>
@@ -47,6 +53,7 @@
           <label>Meddelande
             <textarea name="message" rows="5" required></textarea>
           </label>
+          <p class="form__note">Vi använder dina uppgifter bara för att svara dig. Läs mer i vår <a href="integritetspolicy.html">integritetspolicy</a>.</p>
           <button class="btn btn--primary" type="submit">Skicka</button>
         </form>
       </div>
@@ -55,7 +62,7 @@
 
   <footer class="site-footer">
     <div class="container">
-      <p>&copy; <span data-year></span> InFlow</p>
+      <p>&copy; <span data-year></span> InFlow · <a href="integritetspolicy.html">Integritetspolicy</a></p>
       <div class="footer__links">
         <a href="mailto:info@inflow.se">info@inflow.se</a>
         <!-- Replace the hrefs with InFlow's real profile URLs -->
@@ -76,5 +83,6 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script src="js/forms.js"></script>
 </body>
 </html>
