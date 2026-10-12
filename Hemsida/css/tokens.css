@@ -1,0 +1,64 @@
+/*
+ * Design tokens — the ONLY place brand values should live.
+ * Replace the placeholder values below with the InFlow palette and fonts.
+ * Everything else in the site reads from these variables.
+ */
+:root {
+  /* Brand colors (placeholders) */
+  --color-primary: #ffffff;
+  --color-primary-hover: #ffffff;
+  --color-secondary: #000000;
+  --color-accent: #f59e0b;
+
+  /* Neutrals */
+  --color-bg: #d7beb1;
+  --color-surface: #f8fafc;
+  --color-text: #0f172a;
+  --color-text-muted: #475569;
+  --color-border: #e2e8f0;
+  --color-on-primary: #000000;
+  --color-on-secondary: #ffffff;
+
+  /* Status */
+  --color-danger: #dc2626; /* cancelled courses */
+
+  /* Default course colors in the schedule (matte). Handed out in order to
+     courses without their own "color:". Add or remove --course-N freely,
+     just keep the numbering unbroken. */
+  /* All dark enough for readable white text (contrast 4.5:1 or more). */
+  --course-1: #4d6b8a;  /* dusty blue */
+  --course-2: #a3553b;  /* terracotta */
+  --course-3: #74506f;  /* plum */
+  --course-4: #3f6e6b;  /* slate teal */
+  --course-5: #8a6d24;  /* mustard */
+  --course-6: #9a5a66;  /* dusty rose */
+  --course-7: #50538a;  /* muted indigo */
+  --course-8: #636a36;  /* olive */
+  --course-9: #7a5a46;  /* clay */
+  --course-10: #5b6270; /* slate grey */
+
+  /* Typography */
+  --font-heading: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.75rem;
+  --text-2xl: clamp(2rem, 5vw, 3.25rem);
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
+  --space-7: 5rem;
+
+  /* Shape & layout */
+  --radius: 0.5rem;
+  --container: 72rem;
+  --header-height: 4rem;
+  --shadow: 0 1px 3px rgb(0 0 0 / 0.08), 0 4px 12px rgb(0 0 0 / 0.05);
+}

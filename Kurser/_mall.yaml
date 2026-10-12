@@ -1,0 +1,58 @@
+# Template for a new course. Make a folder for the course in Kurser/
+# (e.g. "Kurser/halloween_2026/"), copy this file into it, rename the copy
+# to "schedule.yaml" and fill it in.
+# Folders starting with "_" are ignored by the website.
+
+# Required
+day: wed              # mon, tue, wed, thu, fri, sat or sun
+start: "19:00"        # HH:MM, 24h — keep the quotes
+end: "20:00"
+title: Kursnamn
+
+# Optional — leave a line out to hide it on the website
+group: 8-9 år, Ekängen   # used by the group filter; spell it the same in every file
+place: Ekängens skola, gympasalen
+leader: Alice & Linnea
+description: >
+  En kort beskrivning av kursen. Den får gärna vara
+  flera rader lång.
+
+# Optional — the course's color in the schedule. Leave it out to get one of
+# the default matte colors automatically. Any CSS color name or hex code;
+# hex codes MUST be in quotes (a bare # starts a comment in YAML).
+# color: orange
+# color: "#e07b39"
+
+# Meets several times a week? Replace day/start/end above with a list of
+# sessions. Everything else is shared; a session can override a field
+# (e.g. its own "place").
+# sessions:
+#   - day: tue
+#     start: "19:00"
+#     end: "20:00"
+#   - day: thu
+#     start: "18:00"
+#     end: "19:00"
+
+# Optional — the week numbers the course runs. Single weeks and ranges can
+# be mixed; "48-3" wraps over new year. Leave it out = every week.
+# The same week numbers apply every year, so remove/update it for a new term.
+# weeks: [34, 35, 36, "38-47", 49]
+
+# Optional — dates (DD/MM/YYYY) the course is cancelled. It's still shown
+# on those dates, but with a red cross and "Inställt". A reason after the
+# colon is optional and shows when hovering over the course that day.
+# cancelled:
+#   - 21/09/2026: Sjukdom
+#   - 28/09/2026: Lokalen redan bokad av någon annan
+#   - 15/10/2026
+
+# Optional — info for one specific date. Shown instead of the description
+# on that date only.
+# specific_info:
+#   - 14/09/2026: Ta med extra skor idag!
+
+# Optional — limit the course to certain dates (e.g. a term).
+# Leave these out and the course repeats every week.
+# from: "2026-08-24"
+# until: "2026-12-13"

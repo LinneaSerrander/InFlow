@@ -1,0 +1,587 @@
+/* Weekly course schedule (kursschema.html). Uses tokens from tokens.css. */
+
+/* Loading / error text shown before the schedule is ready */
+.schedule-message {
+  padding: var(--space-5);
+  text-align: center;
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+/* Schedule (left) + group filter (right) */
+.schedule-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 15rem;
+  column-gap: var(--space-4);
+  align-items: start;
+}
+
+/* Toolbar and grid join the layout grid directly, so the filter panel
+   always lines up with the top of the schedule box — however tall the title is */
+.schedule-layout__main {
+  display: contents;
+}
+
+.schedule-layout .schedule-toolbar {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.schedule-layout .schedule {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+/* Group filter panel */
+.group-filter {
+  grid-column: 2;
+  grid-row: 2;
+  margin: 0;
+  padding: var(--space-4);
+  min-width: 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.group-filter__title {
+  float: left; /* lets the legend sit inside the panel like a normal heading */
+  width: 100%;
+  padding: 0;
+  font-family: var(--font-heading);
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.group-filter__hint {
+  clear: both;
+  margin-bottom: var(--space-3);
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.group-filter__options {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.group-filter__option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.group-filter__option:hover {
+  border-color: var(--color-secondary);
+}
+
+.group-filter__option:has(input:checked) {
+  border-color: var(--color-secondary);
+  background: rgb(0 0 0 / 0.05);
+  font-weight: 600;
+}
+
+.group-filter__option input {
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  flex-shrink: 0;
+  accent-color: var(--color-secondary);
+}
+
+.group-filter__clear {
+  margin-top: var(--space-3);
+  padding: 0;
+  background: none;
+  border: 0;
+  font: inherit;
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+/* Narrower screens: filter moves above the schedule as a row of chips */
+@media (max-width: 64rem) {
+  .schedule-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .schedule-layout .schedule-toolbar,
+  .schedule-layout .schedule,
+  .group-filter {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .group-filter {
+    order: -1;
+    margin-bottom: var(--space-4);
+  }
+
+  .group-filter__options {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .group-filter__option {
+    border-radius: 999px;
+  }
+}
+
+/* Week number (left) + week navigation (right) above the grid */
+.schedule-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.schedule-toolbar__title {
+  font-size: var(--text-xl);
+}
+
+.schedule-toolbar__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Current week number between the arrows (a label, not a button) */
+.schedule-toolbar__week {
+  min-width: 6.5rem;
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-align: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.icon-btn:hover {
+  border-color: var(--color-secondary);
+  transform: translateY(-1px);
+}
+
+.icon-btn svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.schedule {
+  --hour-height: 4.5rem;
+  --day-header: 3.25rem;
+  --grid-line: rgb(0 0 0 / 0.08);
+
+  display: grid;
+  grid-template-columns: 3.5rem repeat(7, 1fr);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* Time labels down the left side */
+.schedule__times {
+  position: relative;
+  margin-top: var(--day-header);
+  height: calc(var(--hours) * var(--hour-height));
+}
+
+.schedule__time {
+  position: absolute;
+  top: calc(var(--at) * var(--hour-height));
+  right: var(--space-2);
+  transform: translateY(-50%);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.schedule__time:first-child {
+  transform: none;
+}
+
+/* One column per day */
+.schedule__day {
+  border-left: 1px solid var(--color-border);
+  min-width: 0;
+}
+
+.schedule__day-name {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: var(--day-header);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  line-height: 1.3;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.schedule__date {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.schedule__day.is-today .schedule__date {
+  color: inherit;
+  opacity: 0.8;
+}
+
+.schedule__empty-week {
+  display: none;
+}
+
+.schedule__day.is-today .schedule__day-name {
+  background: var(--color-secondary);
+  color: var(--color-on-secondary);
+}
+
+.schedule__day:last-child .schedule__day-name {
+  border-top-right-radius: var(--radius);
+}
+
+.schedule__slots {
+  position: relative;
+  height: calc(var(--hours) * var(--hour-height));
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(var(--hour-height) - 1px),
+    var(--grid-line) calc(var(--hour-height) - 1px),
+    var(--grid-line) var(--hour-height)
+  );
+}
+
+.schedule__none {
+  display: none;
+}
+
+/* A course slot */
+.slot {
+  position: absolute;
+  top: calc(var(--start) * var(--hour-height));
+  height: calc(var(--length) * var(--hour-height));
+  left: 4px;
+  right: 4px;
+  padding-block: 2px;
+}
+
+.slot__button {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  width: 100%;
+  height: 100%;
+  padding: var(--space-2);
+  overflow: hidden;
+  text-align: left;
+  font: inherit;
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  /* --slot-bg / --slot-fg are set per course by js/schedule.js */
+  color: var(--slot-fg, var(--color-on-secondary));
+  background: var(--slot-bg, var(--color-secondary));
+  border: 0;
+  border-left: 4px solid rgb(0 0 0 / 0.25);
+  border-radius: calc(var(--radius) / 2);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.slot:hover .slot__button,
+.slot__button:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+
+.slot__time {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.slot__title {
+  font-weight: 600;
+}
+
+.slot__group {
+  opacity: 0.8;
+}
+
+/* Cancelled on this date: red cross over the slot */
+.slot--cancelled .slot__button {
+  position: relative;
+  border-left-color: var(--color-danger);
+}
+
+.slot--cancelled .slot__button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to top right, transparent calc(50% - 1.5px), var(--color-danger) calc(50% - 1.5px), var(--color-danger) calc(50% + 1.5px), transparent calc(50% + 1.5px)),
+    linear-gradient(to bottom right, transparent calc(50% - 1.5px), var(--color-danger) calc(50% - 1.5px), var(--color-danger) calc(50% + 1.5px), transparent calc(50% + 1.5px));
+}
+
+.slot--cancelled .slot__time,
+.slot--cancelled .slot__title,
+.slot--cancelled .slot__group {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+/* Room at the top of the slot for the marker */
+.slot--cancelled .slot__button {
+  padding-top: calc(var(--space-2) + 1.125rem);
+}
+
+/* "Inställt" marker: centred at the top, drawn above the red cross */
+.slot__cancelled {
+  position: absolute;
+  top: var(--space-1);
+  left: 50%;
+  z-index: 1;
+  transform: translateX(-50%);
+  padding: 0 var(--space-1);
+  white-space: nowrap;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #fff;
+  background: var(--color-danger);
+  border-radius: 2px;
+}
+
+.slot__cancelled-note {
+  display: grid;
+  gap: 2px;
+  margin-bottom: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-danger);
+  background: rgb(220 38 38 / 0.08);
+  border-left: 3px solid var(--color-danger);
+  border-radius: 2px;
+}
+
+.slot__cancelled-note span {
+  color: var(--color-text);
+}
+
+/* specific_info for this date (shown instead of the description) */
+.slot__details .slot__day-info {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+/* Details popup — shown on hover, keyboard focus or tap.
+   Sits outside the slot, to the right, lined up with the slot's top. */
+.slot__details {
+  --popup-gap: var(--space-2);
+
+  position: absolute;
+  top: 0;
+  left: calc(100% + var(--popup-gap));
+  z-index: 10;
+  width: 17rem;
+  padding: var(--space-4);
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.18);
+  visibility: hidden;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
+}
+
+/* Invisible bridge over the gap, so the popup stays open while the mouse
+   moves from the slot onto it */
+.slot__details::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 100%;
+  width: calc(var(--popup-gap) + 2px);
+}
+
+/* Late courses: line the popup up with the slot's bottom instead, so it
+   grows upwards and stays inside the schedule */
+.slot--up .slot__details {
+  top: auto;
+  bottom: 0;
+}
+
+/* Last columns: open to the left of the slot instead of the right */
+.schedule__day.is-end-of-week .slot__details {
+  left: auto;
+  right: calc(100% + var(--popup-gap));
+  transform: translateX(4px);
+}
+
+.schedule__day.is-end-of-week .slot__details::before {
+  right: auto;
+  left: 100%;
+}
+
+.slot:hover .slot__details,
+.slot:focus-within .slot__details {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+}
+
+.slot__details h3 {
+  font-size: var(--text-base);
+  margin-bottom: var(--space-2);
+}
+
+.slot__details dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-1) var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.slot__details dt {
+  font-weight: 600;
+}
+
+.slot__details p {
+  margin-top: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slot__button,
+  .slot__details {
+    transition: none;
+  }
+}
+
+/* Phones: a simple list per day, details always visible, empty days hidden */
+@media (max-width: 48rem) {
+  .schedule {
+    display: block;
+    background: none;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .schedule__times,
+  .schedule__day.is-empty {
+    display: none;
+  }
+
+  .schedule__day {
+    border: 0;
+    margin-bottom: var(--space-4);
+  }
+
+  .schedule.is-empty-week .schedule__empty-week {
+    display: block;
+    color: var(--color-text-muted);
+  }
+
+  .schedule__day-name {
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: flex-start;
+    gap: var(--space-2);
+    height: auto;
+    padding-bottom: var(--space-2);
+    margin-bottom: var(--space-2);
+    font-size: var(--text-lg);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .schedule__day.is-today .schedule__day-name {
+    background: none;
+    color: inherit;
+  }
+
+  .schedule__slots {
+    height: auto;
+    background: none;
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .slot {
+    position: static;
+    height: auto;
+    padding: 0;
+    background: var(--color-surface);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .slot__button {
+    height: auto;
+    border-radius: 0;
+    cursor: default;
+  }
+
+  .slot:hover .slot__button {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .slot__details,
+  .slot--up .slot__details,
+  .schedule__day.is-end-of-week .slot__details {
+    position: static;
+    width: auto;
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    border: 0;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .slot__details h3,
+  .slot__details::before {
+    display: none;
+  }
+}

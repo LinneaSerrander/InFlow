@@ -1,0 +1,61 @@
+# Publishes the website to GitHub Pages every time something is pushed to
+# the main branch (or when started by hand under the Actions tab).
+#
+# 1. Bundles the course files: Kurser/*/schedule.yaml -> Hemsida/data/kurser.json
+# 2. Copies only the website files (no .claude/ or tools/) into _site/
+# 3. Publishes _site/ to GitHub Pages
+name: Publicera hemsidan
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never run two publishes at once; a newer push replaces a waiting one
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Bundle the course files
+        working-directory: Hemsida
+        run: python tools/build_courses.py
+
+      - name: Collect the website files
+        run: |
+          rsync -a \
+            --exclude '.claude/' \
+            --exclude 'tools/' \
+            --exclude '__pycache__/' \
+            Hemsida/ _site/
+          echo "Published files:" && find _site -type f | sort
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

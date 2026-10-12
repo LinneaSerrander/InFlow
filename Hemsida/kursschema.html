@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kursschema – InFlow</title>
+  <meta name="description" content="Kursschema för InFlow.">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/schedule.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Hoppa till innehåll</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="index.html">InFlow</a>
+      <nav class="nav" aria-label="Main">
+        <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-list">Meny</button>
+        <ul class="nav__list" id="nav-list">
+          <li><a href="om-oss.html">Om oss</a></li>
+          <li><a href="kursschema.html">Kursschema</a></li>
+          <li><a href="anmalan.html">Intresseanmälan</a></li>
+          <li><a href="kontakt.html">Kontakta oss</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section">
+      <div class="container">
+        <div class="section__header">
+          <h1>Kursschema</h1>
+          <p>Våra pass under veckan. Håll muspekaren över ett pass (eller tryck på det) för mer information.</p>
+        </div>
+        <!-- The schedule is built from the course files in InFlow/Kurser/ (see js/courses.js) -->
+        <div data-schedule></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span data-year></span> InFlow</p>
+      <div class="footer__links">
+        <a href="mailto:info@inflow.se">info@inflow.se</a>
+        <!-- Replace the hrefs with InFlow's real profile URLs -->
+        <ul class="social" aria-label="Sociala medier">
+          <li>
+            <a href="https://www.instagram.com/inflow___studio" target="_blank" rel="noopener" aria-label="InFlow på Instagram">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="InFlow på Facebook">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+  <script src="js/courses.js"></script>
+  <script src="js/schedule.js"></script>
+</body>
+</html>
