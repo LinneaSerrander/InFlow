@@ -43,6 +43,7 @@ h1,
 h2,
 h3 {
   font-family: var(--font-heading);
+  font-weight: 400; /* The Seasons only comes in one weight */
   line-height: 1.2;
 }
 

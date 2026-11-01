@@ -39,7 +39,7 @@ Edit it in the Apps Script editor (and copy the change back into
 Version: Ny version/New version → Implementera/Deploy**. The URL stays the
 same, so the website doesn't need changing.
 
-## Switching to info@inflow.se later
+## Switching to info@inflowstudio.se later
 Change `NOTIFY_EMAIL` in the script and deploy a new version as above.
 
 ## Adding a field to a form

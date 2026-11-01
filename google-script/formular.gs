@@ -18,7 +18,7 @@
 
 // ===== Settings ===========================================================
 
-// Where the notification emails go. Change to info@inflow.se once it exists.
+// Where the notification emails go. Change to info@inflowstudio.se once it exists.
 const NOTIFY_EMAIL = "DIN.ADRESS@gmail.com";
 
 // Longest text accepted in a single field (characters)
