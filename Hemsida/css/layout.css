@@ -368,6 +368,38 @@
   display: none;
 }
 
+.course__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+}
+
+/* Seat status badge: many / few / full */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.2em 0.75em;
+  border-radius: 999px;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.status::before {
+  content: "";
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.status--many { background: #e3efe1; color: #2f6b3a; }
+.status--few  { background: #f7ead0; color: #7a5200; }
+.status--full { background: #f6dede; color: #9b2c2c; }
+.status--closed { background: #e8e3de; color: #57504a; }
+
 /* Plus sign that turns into a minus when the course is open */
 .course__summary::after {
   content: "+";

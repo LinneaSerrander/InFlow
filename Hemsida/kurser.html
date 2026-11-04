@@ -43,12 +43,19 @@
           <h1>Kurser</h1>
           <p>Här hittar du våra kommande kurser. Anmäl intresse via <a href="anmalan.html">intresseanmälan</a>. I <a href="kursschema.html">kursschemat</a> ser du alla pass under veckan.</p>
         </div>
+        <!-- Seat status, next to each heading. Pick one:
+               <span class="status status--many">Många platser kvar</span>
+               <span class="status status--few">Några platser kvar</span>
+               <span class="status status--full">Fullt – ställ dig i kö</span>
+               <span class="status status--closed">Anmälan ej öppen</span> -->
         <!-- One course per row; only the heading shows until it's clicked (<details>).
              To add a picture, put it right after </div> of course__body:
              <img class="course__image" src="assets/images/..." alt="..."> -->
         <div class="courses">
           <details class="card course course--winter">
-            <summary class="course__summary"><h3>Julläger i Åtvidaberg, födda 2017–2019</h3></summary>
+            <summary class="course__summary">
+              <span class="course__title"><h3>Julläger i Åtvidaberg, födda 2017–2019</h3><span class="status status--closed">Anmälan ej öppen</span></span>
+            </summary>
             <div class="course__content">
               <div class="course__body">
                 <p>Kickstarta det nya året med streetdance! Under tre dagar fyller vi salen med musik, energi och nya moves. Vi lär oss en koreografi, gör dansövningar och utmanar oss själva, men framför allt dansar vi tillsammans och har en riktigt rolig start på året. Inga förkunskaper krävs, så kom som du är, oavsett om du är helt ny eller redan har dansat ett tag!</p>
@@ -62,7 +69,9 @@
             </div>
           </details>
           <details class="card course course--winter">
-            <summary class="course__summary"><h3>Julläger i Åtvidaberg, födda 2020–2021</h3></summary>
+            <summary class="course__summary">
+              <span class="course__title"><h3>Julläger i Åtvidaberg, födda 2020–2021</h3><span class="status status--closed">Anmälan ej öppen</span></span>
+            </summary>
             <div class="course__content">
               <div class="course__body">
                 <p>Kickstarta det nya året med streetdance! Under två dagar fyller vi salen med musik, energi och nya moves. Vi lär oss en koreografi, gör dansövningar och utmanar oss själva, men framför allt dansar vi tillsammans och har en riktigt rolig start på året. Inga förkunskaper krävs, så kom som du är, oavsett om du är helt ny eller redan har dansat ett tag!</p>
@@ -76,7 +85,9 @@
             </div>
           </details>
           <details class="card course">
-            <summary class="course__summary"><h3>Kortkurs i Ekängen födda 2016–2018</h3></summary>
+            <summary class="course__summary">
+              <span class="course__title"><h3>Kortkurs i Ekängen födda 2016–2018</h3><span class="status status--closed">Anmälan ej öppen</span></span>
+            </summary>
             <div class="course__content">
               <div class="course__body">
                 <p>Vi startar terminen med en kortkurs i Ekängen! Under fyra lördagar bjuder Linnea och Alice på lektioner fyllda med inspiration, energi och dansglädje. Varje lektion innehåller bland annat uppvärmning, styrka, stretch och koreografi. Kursen passar lika bra för dig som har dansat förut som för dig som vill prova för första gången. Ett perfekt sätt att starta med dansen tidigt på året och lära känna nya danskompisar!</p>
@@ -91,7 +102,9 @@
             </div>
           </details>
           <details class="card course">
-            <summary class="course__summary"><h3>Kortkurs i Ekängen födda 2019–2021</h3></summary>
+            <summary class="course__summary">
+              <span class="course__title"><h3>Kortkurs i Ekängen födda 2019–2021</h3><span class="status status--closed">Anmälan ej öppen</span></span>
+            </summary>
             <div class="course__content">
               <div class="course__body">
                 <p>Vi startar terminen med en kortkurs i Ekängen! Under fyra lördagar bjuder Linnea och Alice på lektioner fyllda med inspiration, energi och dansglädje. Varje lektion innehåller bland annat uppvärmning, styrka, stretch och koreografi. Kursen passar lika bra för dig som har dansat förut som för dig som vill prova för första gången. Ett perfekt sätt att starta med dansen tidigt på året och lära känna nya danskompisar!</p>
@@ -106,7 +119,9 @@
             </div>
           </details>
           <details class="card course">
-            <summary class="course__summary"><h3>Vårtermin i Åtvidaberg</h3></summary>
+            <summary class="course__summary">
+              <span class="course__title"><h3>Vårtermin i Åtvidaberg</h3><span class="status status--closed">Anmälan ej öppen</span></span>
+            </summary>
             <div class="course__content">
               <div class="course__body">
                 <p>Vår terminskurs i dans, där vi ses varje vecka under våren. Vi utvecklar tekniken i lugn takt, lär oss nya danser och har roligt tillsammans i gruppen.</p>
@@ -120,7 +135,9 @@
             </div>
           </details>
           <details class="card course">
-            <summary class="course__summary"><h3>Vårtermin i Linköping</h3></summary>
+            <summary class="course__summary">
+              <span class="course__title"><h3>Vårtermin i Linköping</h3><span class="status status--closed">Anmälan ej öppen</span></span>
+            </summary>
             <div class="course__content">
               <div class="course__body">
                 <p>Vår terminskurs i dans, där vi ses varje vecka under våren. Vi utvecklar tekniken i lugn takt, lär oss nya danser och har roligt tillsammans i gruppen.</p>
