@@ -389,6 +389,67 @@
   text-underline-offset: 0.3em;
 }
 
+/* Christmas camps: snowflakes drift down behind the text when opened */
+.course--winter {
+  position: relative;
+  overflow: hidden;
+}
+
+.course--winter > :not(.snow) {
+  position: relative;
+  z-index: 1;
+}
+
+.snow {
+  display: none;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.course--winter[open] .snow {
+  display: block;
+}
+
+.snow span {
+  position: absolute;
+  top: -2rem;
+  color: #9fb3c8;
+  opacity: 0.55;
+  font-family: "Segoe UI Symbol", "Apple Symbols", sans-serif;
+  animation: snowfall linear infinite;
+}
+
+/* Spread the flakes out: position, size, speed and start time */
+.snow span:nth-child(1)  { left: 4%;  font-size: 1.1rem; animation-duration: 11s; animation-delay: -2s; }
+.snow span:nth-child(2)  { left: 14%; font-size: 0.8rem; animation-duration: 14s; animation-delay: -9s; }
+.snow span:nth-child(3)  { left: 25%; font-size: 1.4rem; animation-duration: 12s; animation-delay: -5s; }
+.snow span:nth-child(4)  { left: 37%; font-size: 0.9rem; animation-duration: 16s; animation-delay: -12s; }
+.snow span:nth-child(5)  { left: 48%; font-size: 1.2rem; animation-duration: 13s; animation-delay: -1s; }
+.snow span:nth-child(6)  { left: 59%; font-size: 0.8rem; animation-duration: 15s; animation-delay: -7s; }
+.snow span:nth-child(7)  { left: 70%; font-size: 1.5rem; animation-duration: 12s; animation-delay: -10s; }
+.snow span:nth-child(8)  { left: 79%; font-size: 1rem;   animation-duration: 17s; animation-delay: -4s; }
+.snow span:nth-child(9)  { left: 88%; font-size: 1.3rem; animation-duration: 13s; animation-delay: -8s; }
+.snow span:nth-child(10) { left: 95%; font-size: 0.9rem; animation-duration: 15s; animation-delay: -3s; }
+
+/* Falls from above the card to below it, swaying a little */
+@keyframes snowfall {
+  0%   { top: -2rem;  transform: translateX(0) rotate(0deg); }
+  50%  {              transform: translateX(1.2rem) rotate(180deg); }
+  100% { top: 100%;   transform: translateX(-0.6rem) rotate(360deg); }
+}
+
+/* Visitors who prefer less motion get still flakes */
+@media (prefers-reduced-motion: reduce) {
+  .snow span {
+    animation: none;
+    top: auto;
+  }
+
+  .snow span:nth-child(odd)  { top: 20%; }
+  .snow span:nth-child(even) { top: 65%; }
+}
+
 .course__content {
   display: grid;
   gap: var(--space-5);
