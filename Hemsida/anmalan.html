@@ -31,9 +31,11 @@
   <main id="main">
     <section class="section">
       <div class="container">
-        <div class="section__header">
+        <div class="section__header section__header--dark">
           <h1>Intresseanmälan</h1>
-          <p>How to sign up for a course.</p>
+          <p>Vill du att ditt barn ska få en plats i någon av våra kurser? Börja med att skicka in en intresseanmälan här nedanför.</p>
+          <p>Tänk på att en intresseanmälan <strong>INTE</strong> är en garanterad plats. Vi på InFlow STUDIO går igenom alla anmälningar och hör sedan av oss via mejl, antingen med besked om att ditt barn har fått en plats eller att hen står på kölistan.</p>
+          <p>Är gruppen redan full? Skicka gärna in en anmälan ändå. Om det blir tillräckligt många på kön kan vi öppna fler grupper!</p>
         </div>
         <!-- Sent by js/forms.js to the Google Sheet (receiver: InFlow/google-script/formular.gs) -->
         <form class="form form--wide" data-form="anmalan"
@@ -47,6 +49,11 @@
             <input type="text" name="participant_name" autocomplete="off" required>
           </label>
 
+          <label>Deltagares födelseår
+            <input type="text" name="participant_birth_year" inputmode="numeric" autocomplete="off"
+                   maxlength="4" pattern="(19|20)[0-9]{2}" title="Skriv födelseåret med fyra siffror, t.ex. 2018" required>
+          </label>
+
           <!-- The groups are filled in from the "group:" lines in the course files in InFlow/Kurser/ (js/signup.js) -->
           <label>Grupp
             <select name="group" required data-course-groups>
@@ -55,28 +62,28 @@
           </label>
 
           <div class="form__row">
-            <label>För- och efternamn förälder 1
+            <label>För- och efternamn vårdnadshavare 1
               <input type="text" name="parent1_name" autocomplete="name" required>
             </label>
-            <label><span>För- och efternamn förälder 2 <span class="form__optional">(valfritt)</span></span>
+            <label><span>För- och efternamn vårdnadshavare 2 <span class="form__optional">(valfritt)</span></span>
               <input type="text" name="parent2_name" autocomplete="off">
             </label>
           </div>
 
           <div class="form__row">
-            <label>Telefon förälder 1
+            <label>Telefon vårdnadshavare 1
               <input type="tel" name="parent1_phone" autocomplete="tel" required>
             </label>
-            <label><span>Telefon förälder 2 <span class="form__optional">(valfritt)</span></span>
+            <label><span>Telefon vårdnadshavare 2 <span class="form__optional">(valfritt)</span></span>
               <input type="tel" name="parent2_phone" autocomplete="off">
             </label>
           </div>
 
           <div class="form__row">
-            <label>E-post förälder 1
+            <label>E-post vårdnadshavare 1
               <input type="email" name="parent1_email" autocomplete="email" required>
             </label>
-            <label><span>E-post förälder 2 <span class="form__optional">(valfritt)</span></span>
+            <label><span>E-post vårdnadshavare 2 <span class="form__optional">(valfritt)</span></span>
               <!-- Deliberately NOT type="email" / name "...email": Chrome ignores autocomplete="off"
                    on fields it recognises as email and would suggest the visitor's own address.
                    inputmode keeps the email keyboard on phones; pattern keeps the format check. -->

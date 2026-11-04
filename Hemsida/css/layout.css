@@ -23,6 +23,10 @@
   color: var(--color-text-muted);
 }
 
+.section__header--dark p {
+  color: var(--color-black);
+}
+
 /* Header / navigation */
 .site-header {
   position: sticky;
@@ -63,14 +67,18 @@
   font-weight: 500;
 }
 
+/* Current page and hover: dark text with a dusty rose underline */
 .nav__list a:hover,
 .nav__list a[aria-current="page"] {
-  color: var(--color-primary);
+  color: var(--color-black);
+  text-decoration: underline;
+  text-decoration-color: var(--color-divider);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.35em;
 }
 
 .nav__list a[aria-current="page"] {
-  text-decoration: underline;
-  text-underline-offset: 0.3em;
+  font-weight: 600;
 }
 
 .nav__toggle {
@@ -305,7 +313,7 @@
 }
 
 .form--wide {
-  max-width: 44rem;
+  max-width: 52rem; /* wide enough for the longest label on one line */
 }
 
 /* Two fields side by side (stacks on small screens) */
@@ -313,6 +321,12 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-3);
+}
+
+/* If a label still wraps, keep the two inputs in a row level with each other */
+.form__row label {
+  grid-template-rows: 1fr auto;
+  align-items: end;
 }
 
 .form__optional {

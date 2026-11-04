@@ -32,15 +32,17 @@ const FORMS = {
     fields: [
       ["participant_name", "Deltagare", true],
       ["group", "Grupp", true],
-      ["parent1_name", "Förälder 1", true],
-      ["parent1_phone", "Telefon förälder 1", true],
-      ["parent1_email", "E-post förälder 1", true],
-      ["parent2_name", "Förälder 2", false],
-      ["parent2_phone", "Telefon förälder 2", false],
-      ["parent2_epost", "E-post förälder 2", false],
+      ["parent1_name", "Vårdnadshavare 1", true],
+      ["parent1_phone", "Telefon vårdnadshavare 1", true],
+      ["parent1_email", "E-post vårdnadshavare 1", true],
+      ["parent2_name", "Vårdnadshavare 2", false],
+      ["parent2_phone", "Telefon vårdnadshavare 2", false],
+      ["parent2_epost", "E-post vårdnadshavare 2", false],
       ["photo_consent", "Foto/video OK", false, "checkbox"],
       ["privacy_consent", "Godkänt integritetspolicy", true, "checkbox"],
       ["message", "Meddelande", false],
+      // Added later, so it's last: older sheets only need a new heading at the end
+      ["participant_birth_year", "Födelseår", true],
     ],
     notify: (data) => ({
       subject: `Ny intresseanmälan: ${data.group}`,
