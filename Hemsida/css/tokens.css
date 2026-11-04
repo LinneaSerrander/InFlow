@@ -51,7 +51,7 @@
   /* Neutrals */
   --color-bg: #f5f1ed;
   --color-surface: #ffffff;
-  --color-divider: #d0ae8b; /* lines and frames (not text) */
+  --color-divider: var(--color-brown); /* lines and frames */
   --color-black: #1a1a1a;   /* highlighted text, like the logo */
   --color-brown: #6b4f3f;
   --color-button: var(--color-brown);
