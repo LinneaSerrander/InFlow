@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kursschema – InFlow</title>
-  <meta name="description" content="Kursschema för InFlow.">
+  <title>Kursschema – InFlow STUDIO</title>
+  <meta name="description" content="Kursschema för InFlow STUDIO – alla danspass under veckan.">
 
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
@@ -20,8 +20,15 @@
       <nav class="nav" aria-label="Main">
         <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-list">Meny</button>
         <ul class="nav__list" id="nav-list">
+          <li><a href="index.html">Hem</a></li>
           <li><a href="om-oss.html">Om oss</a></li>
-          <li><a href="kursschema.html">Kurser</a></li>
+          <li class="nav__item--sub">
+            <a href="kurser.html">Kurser</a>
+            <ul class="nav__sub">
+              <li><a href="kurser.html">Våra kurser</a></li>
+              <li><a href="kursschema.html">Kursschema</a></li>
+            </ul>
+          </li>
           <li><a href="anmalan.html">Intresseanmälan</a></li>
           <li><a href="kontakt.html">Kontakta oss</a></li>
         </ul>
@@ -34,7 +41,7 @@
       <div class="container">
         <div class="section__header">
           <h1>Kursschema</h1>
-          <p>Våra pass under veckan. Håll muspekaren över ett pass (eller tryck på det) för mer information.</p>
+          <p>Våra pass under veckan. Håll muspekaren över ett pass (eller tryck på det) för mer information. Läs mer om varje kurs under <a href="kurser.html">Våra kurser</a>.</p>
         </div>
         <!-- The schedule is built from the course files in InFlow/Kurser/ (see js/courses.js) -->
         <div data-schedule></div>

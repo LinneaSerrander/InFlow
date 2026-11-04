@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kurser – InFlow STUDIO</title>
+  <meta name="description" content="Kurser hos InFlow STUDIO – dans för barn och unga i Linköping och Åtvidaberg.">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Hoppa till innehåll</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="index.html"><img src="assets/images/logo.png" alt="InFlow STUDIO"></a>
+      <nav class="nav" aria-label="Main">
+        <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-list">Meny</button>
+        <ul class="nav__list" id="nav-list">
+          <li><a href="index.html">Hem</a></li>
+          <li><a href="om-oss.html">Om oss</a></li>
+          <li class="nav__item--sub">
+            <a href="kurser.html">Kurser</a>
+            <ul class="nav__sub">
+              <li><a href="kurser.html">Våra kurser</a></li>
+              <li><a href="kursschema.html">Kursschema</a></li>
+            </ul>
+          </li>
+          <li><a href="anmalan.html">Intresseanmälan</a></li>
+          <li><a href="kontakt.html">Kontakta oss</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Course overview. Edit the text here; the weekly schedule (kursschema.html) comes from InFlow/Kurser/ -->
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section__header">
+          <h1>Kurser</h1>
+          <p>Här hittar du våra kommande kurser. Anmäl intresse via <a href="anmalan.html">intresseanmälan</a>. I <a href="kursschema.html">kursschemat</a> ser du alla pass under veckan.</p>
+        </div>
+        <!-- One course per row. To add a picture, put it last in the card:
+             <img class="course__image" src="assets/images/..." alt="..."> -->
+        <div class="courses">
+          <article class="card course">
+            <div class="course__body">
+              <h3>Julläger i Åtvidaberg</h3>
+              <p>Starta det nya året med dans! Under lägret dansar vi tillsammans, lär oss nya steg och skapar en egen dans i gruppen. Ett härligt sätt att träffa nya kompisar och fylla på med rörelseglädje.</p>
+              <dl class="course__facts">
+                <div><dt>Datum</dt><dd>Födda 2017–2019: 8–10 januari<br>Födda 2020–2021: 9–10 januari</dd></div>
+                <div><dt>Plats</dt><dd>Sporthallen, sal B, Åtvidaberg</dd></div>
+                <div><dt>Lärare</dt><dd>Alice och Linnea</dd></div>
+                <div><dt>Pris</dt><dd>Meddelas snart</dd></div>
+              </dl>
+            </div>
+          </article>
+          <article class="card course">
+            <div class="course__body">
+              <h3>Kortkurs i Ekängen</h3>
+              <p>En kortkurs på fyra veckor där vi provar på blandad dans. Kursen passar både dig som är ny och dig som har dansat förut.</p>
+              <dl class="course__facts">
+                <div><dt>Datum</dt><dd>Vecka 3–6 (18 januari–14 februari)</dd></div>
+                <div><dt>Ålder</dt><dd>Födda 2019–2021 och 2016–2018</dd></div>
+                <div><dt>Plats</dt><dd>Ekängsskolan, gympasalen, Linköping</dd></div>
+                <div><dt>Lärare</dt><dd>Alice och Linnea</dd></div>
+                <div><dt>Pris</dt><dd>Meddelas snart</dd></div>
+              </dl>
+            </div>
+          </article>
+          <article class="card course">
+            <div class="course__body">
+              <h3>Vårtermin i Åtvidaberg</h3>
+              <p>Vår terminskurs i dans, där vi ses varje vecka under våren. Vi utvecklar tekniken i lugn takt, lär oss nya danser och har roligt tillsammans i gruppen.</p>
+              <dl class="course__facts">
+                <div><dt>Datum</dt><dd>Start vecka 9 (1 mars)</dd></div>
+                <div><dt>Plats</dt><dd>Sporthallen, sal B, Åtvidaberg</dd></div>
+                <div><dt>Lärare</dt><dd>Alice</dd></div>
+                <div><dt>Pris</dt><dd>Meddelas snart</dd></div>
+              </dl>
+            </div>
+          </article>
+          <article class="card course">
+            <div class="course__body">
+              <h3>Vårtermin i Linköping</h3>
+              <p>Vår terminskurs i dans, där vi ses varje vecka under våren. Vi utvecklar tekniken i lugn takt, lär oss nya danser och har roligt tillsammans i gruppen.</p>
+              <dl class="course__facts">
+                <div><dt>Datum</dt><dd>Start vecka 9 (1 mars)</dd></div>
+                <div><dt>Plats</dt><dd>Linköping</dd></div>
+                <div><dt>Lärare</dt><dd>Linnea</dd></div>
+                <div><dt>Pris</dt><dd>Meddelas snart</dd></div>
+              </dl>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span data-year></span> InFlow · <a href="integritetspolicy.html">Integritetspolicy</a></p>
+      <div class="footer__links">
+        <a href="mailto:info@inflowstudio.se">info@inflowstudio.se</a>
+        <!-- Replace the hrefs with InFlow's real profile URLs -->
+        <ul class="social" aria-label="Sociala medier">
+          <li>
+            <a href="https://www.instagram.com/inflow___studio" target="_blank" rel="noopener" aria-label="InFlow på Instagram">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="InFlow på Facebook">
+              <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

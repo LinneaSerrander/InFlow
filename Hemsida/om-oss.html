@@ -19,8 +19,15 @@
       <nav class="nav" aria-label="Main">
         <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-list">Meny</button>
         <ul class="nav__list" id="nav-list">
+          <li><a href="index.html">Hem</a></li>
           <li><a href="om-oss.html">Om oss</a></li>
-          <li><a href="kursschema.html">Kurser</a></li>
+          <li class="nav__item--sub">
+            <a href="kurser.html">Kurser</a>
+            <ul class="nav__sub">
+              <li><a href="kurser.html">Våra kurser</a></li>
+              <li><a href="kursschema.html">Kursschema</a></li>
+            </ul>
+          </li>
           <li><a href="anmalan.html">Intresseanmälan</a></li>
           <li><a href="kontakt.html">Kontakta oss</a></li>
         </ul>

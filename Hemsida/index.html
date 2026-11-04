@@ -20,8 +20,15 @@
       <nav class="nav" aria-label="Main">
         <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-list">Meny</button>
         <ul class="nav__list" id="nav-list">
+          <li><a href="index.html">Hem</a></li>
           <li><a href="om-oss.html">Om oss</a></li>
-          <li><a href="kursschema.html">Kurser</a></li>
+          <li class="nav__item--sub">
+            <a href="kurser.html">Kurser</a>
+            <ul class="nav__sub">
+              <li><a href="kurser.html">Våra kurser</a></li>
+              <li><a href="kursschema.html">Kursschema</a></li>
+            </ul>
+          </li>
           <li><a href="anmalan.html">Intresseanmälan</a></li>
           <li><a href="kontakt.html">Kontakta oss</a></li>
         </ul>
@@ -31,7 +38,8 @@
 
   <main id="main">
     <section class="hero">
-      <div class="container">
+      <div class="container hero__inner">
+        <img class="hero__figure" src="assets/images/figur.png" alt="" aria-hidden="true">
         <div class="hero__content">
           <h1>InFlow STUDIO</h1>
           <p class="hero__lead">Dans, träning och hälsa – med fokus på glädje och gemenskap. Hos oss rör vi oss tillsammans, har roligt och mår bra!</p>
@@ -80,7 +88,7 @@
         </div>
         <div class="section__actions">
           <a class="btn btn--primary" href="anmalan.html">Gör intresseanmälan här</a>
-          <a class="btn btn--ghost" href="kursschema.html">Läs mer om kurserna här</a>
+          <a class="btn btn--ghost" href="kurser.html">Läs mer om kurserna här</a>
         </div>
       </div>
     </section>

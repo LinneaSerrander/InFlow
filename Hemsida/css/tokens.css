@@ -49,12 +49,13 @@
   --color-accent: #f59e0b;
 
   /* Neutrals */
-  --color-bg: #f5edee;
+  --color-bg: #f5f1ed;
   --color-surface: #ffffff;
-  --color-divider: #d08b91; /* dusty rose: lines and frames (not text) */
-  --color-black: #1a1a1a;   /* buttons and highlighted text, like the logo */
-  --color-button: var(--color-black);
-  --color-button-hover: #3a3a3a;
+  --color-divider: #d0ae8b; /* lines and frames (not text) */
+  --color-black: #1a1a1a;   /* highlighted text, like the logo */
+  --color-brown: #6b4f3f;
+  --color-button: var(--color-brown);
+  --color-button-hover: #57402f;
   --color-on-button: #ffffff;
   --color-text: #0f172a;
   --color-text-muted: #475569;

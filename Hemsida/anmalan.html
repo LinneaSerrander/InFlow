@@ -19,8 +19,15 @@
       <nav class="nav" aria-label="Main">
         <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-list">Meny</button>
         <ul class="nav__list" id="nav-list">
+          <li><a href="index.html">Hem</a></li>
           <li><a href="om-oss.html">Om oss</a></li>
-          <li><a href="kursschema.html">Kurser</a></li>
+          <li class="nav__item--sub">
+            <a href="kurser.html">Kurser</a>
+            <ul class="nav__sub">
+              <li><a href="kurser.html">Våra kurser</a></li>
+              <li><a href="kursschema.html">Kursschema</a></li>
+            </ul>
+          </li>
           <li><a href="anmalan.html">Intresseanmälan</a></li>
           <li><a href="kontakt.html">Kontakta oss</a></li>
         </ul>
@@ -104,7 +111,7 @@
 
           <label class="form__check">
             <input type="checkbox" name="privacy_consent" value="ja" required>
-            <span>Jag har läst <a href="integritetspolicy.html" target="_blank">integritetspolicyn</a> och godkänner att InFlow sparar uppgifterna för att hantera anmälan.</span>
+            <span>Jag godkänner att InFlow sparar uppgifterna för att hantera anmälan enligt <a href="integritetspolicy.html" target="_blank">integritetspolicyn</a>.</span>
           </label>
 
           <button class="btn btn--primary" type="submit">Skicka intresseanmälan</button>

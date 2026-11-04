@@ -81,6 +81,87 @@
   font-weight: 600;
 }
 
+/* "Kurser" with a dropdown (Våra kurser / Kursschema). Opens on hover and
+   when tabbing into it with the keyboard. */
+.nav__item--sub {
+  position: relative;
+}
+
+/* Small arrow after "Kurser" that turns when the menu opens */
+.nav__item--sub > a::after {
+  content: "";
+  display: inline-block;
+  width: 0.4em;
+  height: 0.4em;
+  margin-left: 0.45em;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-0.2em) rotate(45deg);
+  transition: transform 0.2s;
+}
+
+.nav__item--sub:hover > a::after,
+.nav__item--sub:focus-within > a::after {
+  transform: translateY(0.05em) rotate(225deg);
+}
+
+.nav__sub {
+  position: absolute;
+  top: calc(100% + var(--space-3));
+  left: 50%;
+  min-width: 12rem;
+  margin: 0;
+  padding: var(--space-2);
+  list-style: none;
+  background: var(--color-surface);
+  border: 1px solid var(--color-divider);
+  box-shadow: 0 10px 30px rgb(60 40 30 / 0.12);
+  z-index: 60;
+  /* Hidden until hover; fades and slides in */
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, -0.4rem);
+  transition: opacity 0.18s, transform 0.18s, visibility 0.18s;
+}
+
+/* Invisible bridge over the gap, so the menu stays open while the mouse
+   moves down to it */
+.nav__sub::before {
+  content: "";
+  position: absolute;
+  inset: calc(-1 * var(--space-3) - 1px) 0 100% 0;
+}
+
+.nav__item--sub:hover .nav__sub,
+.nav__item--sub:focus-within .nav__sub {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+.nav__sub a {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav__sub,
+  .nav__item--sub > a::after {
+    transition: none;
+  }
+}
+
+/* "Kurser" is marked as current on both of its pages */
+.nav__item--sub:has(.nav__sub [aria-current="page"]) > a {
+  color: var(--color-black);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--color-divider);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.35em;
+}
+
 .nav__toggle {
   display: none;
   padding: var(--space-2);
@@ -114,6 +195,33 @@
     display: block;
     padding: var(--space-3);
   }
+
+  /* Phone menu: the course pages are always shown, indented under "Kurser" */
+  .nav__item--sub > a::after {
+    display: none;
+  }
+
+  .nav__sub {
+    position: static;
+    min-width: 0;
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  .nav__sub::before {
+    display: none;
+  }
+
+  .nav__sub a {
+    padding-left: var(--space-6);
+    font-weight: 400;
+  }
 }
 
 /* Hero */
@@ -123,6 +231,34 @@
 
 .hero__content {
   max-width: 44rem;
+}
+
+/* Dancing figure beside the intro (decorative). The image comes first in
+   the HTML so it sits above the text on phones, small and centred. */
+.hero__inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.hero__figure {
+  grid-column: 2;
+  grid-row: 1;
+  width: 15rem;
+  height: auto;
+}
+
+@media (max-width: 48rem) {
+  .hero__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .hero__figure {
+    grid-column: 1;
+    width: 7rem;
+  }
 }
 
 .hero__lead {
@@ -202,6 +338,68 @@
 
 .card li + li {
   margin-top: var(--space-1);
+}
+
+/* Course overview (Kurser page): one course per row, text on the left and
+   an optional picture (.course__image) on the right */
+.courses {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.course {
+  display: grid;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.course:has(.course__image) {
+  grid-template-columns: 1fr minmax(12rem, 22rem);
+}
+
+.course__body {
+  max-width: 44rem;
+}
+
+.course__image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+@media (max-width: 48rem) {
+  .course:has(.course__image) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.course__facts {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-divider);
+}
+
+.course__facts div {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  gap: var(--space-2);
+}
+
+.course__facts dt {
+  font-weight: 600;
+}
+
+.course__facts dd {
+  margin: 0;
+}
+
+.section__header a {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
 }
 
 /* Values (About page): plain text columns with a thin line on top,
