@@ -354,13 +354,49 @@
   gap: var(--space-4);
 }
 
-.course {
+/* Each course is a <details>: the heading is the clickable summary */
+.course__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  cursor: pointer;
+  list-style: none;
+}
+
+.course__summary::-webkit-details-marker {
+  display: none;
+}
+
+/* Plus sign that turns into a minus when the course is open */
+.course__summary::after {
+  content: "+";
+  flex-shrink: 0;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--color-button);
+  transition: transform 0.2s;
+}
+
+.course[open] .course__summary::after {
+  content: "−";
+}
+
+.course__summary:hover h3 {
+  text-decoration: underline;
+  text-decoration-color: var(--color-divider);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.3em;
+}
+
+.course__content {
   display: grid;
   gap: var(--space-5);
   align-items: start;
+  margin-top: var(--space-3);
 }
 
-.course:has(.course__image) {
+.course__content:has(.course__image) {
   grid-template-columns: 1fr minmax(12rem, 22rem);
 }
 
@@ -376,7 +412,7 @@
 }
 
 @media (max-width: 48rem) {
-  .course:has(.course__image) {
+  .course__content:has(.course__image) {
     grid-template-columns: 1fr;
   }
 }
