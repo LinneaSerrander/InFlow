@@ -164,11 +164,13 @@
 
 .nav__toggle {
   display: none;
-  padding: var(--space-2);
+  padding: var(--space-2) var(--space-3);
   background: none;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-black);
   border-radius: var(--radius);
   font: inherit;
+  font-weight: 500;
+  color: var(--color-black); /* phones otherwise show button text in blue */
   cursor: pointer;
 }
 
@@ -183,8 +185,13 @@
     inset: var(--header-height) 0 auto 0;
     flex-direction: column;
     gap: 0;
+    padding-bottom: var(--space-2);
     background: var(--color-bg);
-    border-bottom: 1px solid var(--color-border);
+    /* A clear edge, and the page below is dimmed, so it's obvious where the
+       menu ends. clip-path keeps the dimming off the header above. */
+    border-bottom: 2px solid var(--color-divider);
+    box-shadow: 0 0 0 100vmax rgb(30 20 15 / 0.35);
+    clip-path: inset(0 0 -100vmax 0);
   }
 
   .nav__list.is-open {

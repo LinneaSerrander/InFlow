@@ -15,6 +15,14 @@ if (toggle && navList) {
       toggle.setAttribute("aria-expanded", "false");
     }
   });
+
+  // Close the menu when tapping the dimmed page outside it
+  document.addEventListener("click", (event) => {
+    if (navList.classList.contains("is-open") && !event.target.closest(".nav")) {
+      navList.classList.remove("is-open");
+      toggle.setAttribute("aria-expanded", "false");
+    }
+  });
 }
 
 // Highlight the menu link for the current page
