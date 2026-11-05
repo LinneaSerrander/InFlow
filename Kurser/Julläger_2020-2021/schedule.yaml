@@ -1,0 +1,21 @@
+# Julläger i Åtvidaberg för födda 2020–2021: lördag 9 och söndag 10 januari 2027.
+
+title: Julläger Åtvidaberg, födda 2020-2021
+group: Julläger Åtvidaberg, födda 2020-2021   # used by the group filter; spell it the same in every file
+place: Åtvidabergs sporthall B
+leader: Alice & Linnea
+description: >
+  Två dagar streetdance med musik, energi och nya moves.
+  Inga förkunskaper krävs.
+
+sessions:
+  - day: sat
+    start: "10:00"
+    end: "12:00"
+  - day: sun
+    start: "10:00"
+    end: "12:00"
+
+# Only that weekend (otherwise it would repeat every week)
+from: "2027-01-09"
+until: "2027-01-10"
