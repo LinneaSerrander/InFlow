@@ -2,8 +2,10 @@
 
 The website's forms (Intresseanmälan, Kontakta oss) are sent to a small
 Google Apps Script. It stores every submission as a row in a Google Sheet and
-emails a notification. The code is `formular.gs` in this folder — this
-folder is NOT part of the published website.
+emails a notification. Sign-ups get one tab per group (named after the
+group, created automatically on the first sign-up); contact messages go to
+"Meddelanden". The code is `formular.gs` in this folder — this folder is NOT
+part of the published website.
 
 ## Set it up (once, ~15 minutes)
 

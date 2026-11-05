@@ -8,7 +8,8 @@
  *
  * For every submission it:
  *   1. checks the fields (required ones filled in, nothing too long)
- *   2. adds a row to the form's tab in the sheet (the tab is created if missing)
+ *   2. adds a row to the form's tab in the sheet (the tab is created if missing).
+ *      Sign-ups get one tab per group, named after the group.
  *   3. emails NOTIFY_EMAIL — for sign-ups only that one arrived and for which
  *      group; the personal details stay in the sheet.
  *
@@ -28,7 +29,8 @@ const MAX_LENGTH = 2000;
 // Each field: [name in the HTML, column heading in the sheet, required?, type]
 const FORMS = {
   anmalan: {
-    sheet: "Intresseanmälningar",
+    // One tab per group, e.g. "Julläger Åtvidaberg, födda 2017-2019"
+    sheet: (data) => groupSheetName(data.group),
     fields: [
       ["participant_name", "Deltagare", true],
       ["group", "Grupp", true],
@@ -94,7 +96,7 @@ function doPost(e) {
     const lock = LockService.getScriptLock();
     lock.waitLock(10000);
     try {
-      const sheet = getSheet(form);
+      const sheet = getSheet(form, data);
       sheet.appendRow([new Date(), ...form.fields.map(([key]) => safeCell(data[key]))]);
     } finally {
       lock.releaseLock();
@@ -123,12 +125,14 @@ function reply(ok, error) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
-// The form's tab, created with a heading row the first time
-function getSheet(form) {
+// The form's tab, created with a heading row the first time. form.sheet is
+// either a fixed name or a function that picks the name from the data.
+function getSheet(form, data) {
+  const name = typeof form.sheet === "function" ? form.sheet(data) : form.sheet;
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
-  let sheet = spreadsheet.getSheetByName(form.sheet);
+  let sheet = spreadsheet.getSheetByName(name);
   if (!sheet) {
-    sheet = spreadsheet.insertSheet(form.sheet);
+    sheet = spreadsheet.insertSheet(name);
     sheet.appendRow(["Inkommet", ...form.fields.map(([, heading]) => heading)]);
     sheet.setFrozenRows(1);
     sheet.getRange(1, 1, 1, form.fields.length + 1).setFontWeight("bold");
@@ -141,6 +145,13 @@ function getSheet(form) {
 // like +46... are kept as text this way too.
 function safeCell(value) {
   return /^[=+\-@]/.test(value) ? `'${value}` : value;
+}
+
+// A tab name made from the group. Sheets doesn't allow [ ] * ? / \ : in tab
+// names, and they can be at most 100 characters.
+function groupSheetName(group) {
+  const name = String(group || "").replace(/[\[\]*?\/\\:]/g, "-").trim().slice(0, 100);
+  return name || "Intresseanmälningar";
 }
 
 function sheetUrl() {
