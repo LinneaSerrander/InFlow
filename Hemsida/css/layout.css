@@ -843,3 +843,24 @@
   color: var(--color-black);
   padding: var(--space-4);
 }
+
+/* Phones: only the latest Instagram post (the last one in the list), with less spacing */
+@media (max-width: 48rem) {
+  .insta > :not(:last-child) {
+    display: none !important;
+  }
+
+  .insta {
+    padding: var(--space-3);
+    margin-bottom: var(--space-3);
+  }
+
+  .footer-insta p {
+    margin-bottom: var(--space-3);
+  }
+
+  /* The thin line under the Instagram part is hard to see on small screens */
+  .site-footer .footer-insta {
+    border-bottom: 1px solid rgb(255 255 255 / 0.4);
+  }
+}
