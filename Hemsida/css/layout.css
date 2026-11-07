@@ -611,6 +611,23 @@
   gap: var(--space-3);
 }
 
+/* A group of fields for one person (e.g. Vårdnadshavare 1) */
+.form__group {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.form__group legend {
+  padding: 0;
+  margin-bottom: var(--space-1);
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+}
+
 /* If a label still wraps, keep the two inputs in a row level with each other */
 .form__row label {
   grid-template-rows: 1fr auto;

@@ -68,36 +68,39 @@
             </select>
           </label>
 
+          <!-- One group per guardian: side by side on wide screens, guardian 1
+               first and then guardian 2 on phones -->
           <div class="form__row">
-            <label>För- och efternamn vårdnadshavare 1
-              <input type="text" name="parent1_name" autocomplete="name" required>
-            </label>
-            <label><span>För- och efternamn vårdnadshavare 2 <span class="form__optional">(valfritt)</span></span>
-              <input type="text" name="parent2_name" autocomplete="off">
-            </label>
-          </div>
+            <fieldset class="form__group">
+              <legend>Vårdnadshavare 1</legend>
+              <label>För- och efternamn
+                <input type="text" name="parent1_name" autocomplete="name" required>
+              </label>
+              <label>Telefon
+                <input type="tel" name="parent1_phone" autocomplete="tel" required>
+              </label>
+              <label>E-post
+                <input type="email" name="parent1_email" autocomplete="email" required>
+              </label>
+            </fieldset>
 
-          <div class="form__row">
-            <label>Telefon vårdnadshavare 1
-              <input type="tel" name="parent1_phone" autocomplete="tel" required>
-            </label>
-            <label><span>Telefon vårdnadshavare 2 <span class="form__optional">(valfritt)</span></span>
-              <input type="tel" name="parent2_phone" autocomplete="off">
-            </label>
-          </div>
-
-          <div class="form__row">
-            <label>E-post vårdnadshavare 1
-              <input type="email" name="parent1_email" autocomplete="email" required>
-            </label>
-            <label><span>E-post vårdnadshavare 2 <span class="form__optional">(valfritt)</span></span>
-              <!-- Deliberately NOT type="email" / name "...email": Chrome ignores autocomplete="off"
-                   on fields it recognises as email and would suggest the visitor's own address.
-                   inputmode keeps the email keyboard on phones; pattern keeps the format check. -->
-              <input type="text" name="parent2_epost" inputmode="email" autocomplete="off"
-                     spellcheck="false" autocapitalize="off"
-                     pattern="[^@\s]+@[^@\s]+\.[^@\s]+" title="Ange en giltig e-postadress, t.ex. namn@exempel.se">
-            </label>
+            <fieldset class="form__group">
+              <legend>Vårdnadshavare 2 <span class="form__optional">(valfritt)</span></legend>
+              <label>För- och efternamn
+                <input type="text" name="parent2_name" autocomplete="off">
+              </label>
+              <label>Telefon
+                <input type="tel" name="parent2_phone" autocomplete="off">
+              </label>
+              <label>E-post
+                <!-- Deliberately NOT type="email" / name "...email": Chrome ignores autocomplete="off"
+                     on fields it recognises as email and would suggest the visitor's own address.
+                     inputmode keeps the email keyboard on phones; pattern keeps the format check. -->
+                <input type="text" name="parent2_epost" inputmode="email" autocomplete="off"
+                       spellcheck="false" autocapitalize="off"
+                       pattern="[^@\s]+@[^@\s]+\.[^@\s]+" title="Ange en giltig e-postadress, t.ex. namn@exempel.se">
+              </label>
+            </fieldset>
           </div>
 
           <label class="form__check">
