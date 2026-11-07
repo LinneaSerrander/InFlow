@@ -92,10 +92,27 @@
         </div>
       </div>
     </section>
-
   </main>
 
   <footer class="site-footer">
+    <!-- Start page only: hand-picked Instagram posts, embedded with Instagram's
+         own embed script. To change a post, replace the link in data-instgrm-permalink. -->
+    <div class="container footer-insta">
+      <h2>Följ oss på Instagram</h2>
+      <p>Följ oss på Instagram för att hålla dig uppdaterad om vad som händer i studion! Du hittar oss på <a href="https://www.instagram.com/inflow___studio" target="_blank" rel="noopener">@inflow___studio</a>.</p>
+      <div class="insta">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/Dfbr44_xI5F/" data-instgrm-version="14">
+          <a href="https://www.instagram.com/p/Dfbr44_xI5F/" target="_blank" rel="noopener">Se inlägget på Instagram</a>
+        </blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DfbwWcKxv-F/" data-instgrm-version="14">
+          <a href="https://www.instagram.com/p/DfbwWcKxv-F/" target="_blank" rel="noopener">Se inlägget på Instagram</a>
+        </blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/Dfb1gR0RyPY/" data-instgrm-version="14">
+          <a href="https://www.instagram.com/p/Dfb1gR0RyPY/" target="_blank" rel="noopener">Se inlägget på Instagram</a>
+        </blockquote>
+      </div>
+      <a class="btn btn--primary" href="https://www.instagram.com/inflow___studio" target="_blank" rel="noopener">Besök oss på Instagram</a>
+    </div>
     <div class="container">
       <p>&copy; <span data-year></span> InFlow · <a href="integritetspolicy.html">Integritetspolicy</a></p>
       <div class="footer__links">
@@ -108,7 +125,7 @@
             </a>
           </li>
           <li>
-            <a href="https://www.facebook.com/" target="_blank" rel="noopener" aria-label="InFlow på Facebook">
+            <a href="https://www.facebook.com/profile.php?id=61594479692983" target="_blank" rel="noopener" aria-label="InFlow på Facebook">
               <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
             </a>
           </li>
@@ -118,5 +135,22 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script async src="https://www.instagram.com/embed.js"></script>
+  <script>
+    // Instagram gives each post its own height; stretch all of them to the tallest one.
+    (function () {
+      var box = document.querySelector('.insta');
+      if (!box) return;
+      new MutationObserver(function () {
+        var frames = box.querySelectorAll('iframe');
+        var tallest = 0;
+        frames.forEach(function (f) { tallest = Math.max(tallest, parseFloat(f.getAttribute('height')) || 0); });
+        frames.forEach(function (f) {
+          var h = tallest + 'px';
+          if (f.style.minHeight !== h) f.style.minHeight = h;
+        });
+      }).observe(box, { subtree: true, childList: true, attributes: true, attributeFilter: ['height'] });
+    })();
+  </script>
 </body>
 </html>
