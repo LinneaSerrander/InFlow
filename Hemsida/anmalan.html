@@ -103,10 +103,21 @@
             </fieldset>
           </div>
 
-          <label class="form__check">
-            <input type="checkbox" name="photo_consent" value="ja">
-            Jag godkänner att mitt barn får vara med på foto och video.
-          </label>
+          <!-- Photo consent: an active Yes/No choice (a pre-ticked box is not valid consent
+               under GDPR). "Nej" is sent as an empty value, which the script records as "Nej". -->
+          <fieldset class="form__group form__choice">
+            <legend>Får ditt barn vara med på foto och video?</legend>
+            <div class="form__options">
+              <label class="form__check">
+                <input type="radio" name="photo_consent" value="ja" required>
+                Ja
+              </label>
+              <label class="form__check">
+                <input type="radio" name="photo_consent" value="" required>
+                Nej
+              </label>
+            </div>
+          </fieldset>
 
           <label><span>Meddelande <span class="form__optional">(t.ex allergier)</span></span>
             <textarea name="message" rows="5"></textarea>

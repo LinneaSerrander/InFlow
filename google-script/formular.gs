@@ -19,8 +19,8 @@
 
 // ===== Settings ===========================================================
 
-// Where the notification emails go. Change to info@inflowstudio.se once it exists.
-const NOTIFY_EMAIL = "DIN.ADRESS@gmail.com";
+// Where the notification emails go
+const NOTIFY_EMAIL = "info@inflowstudio.se";
 
 // Longest text accepted in a single field (characters)
 const MAX_LENGTH = 2000;
@@ -87,7 +87,8 @@ function doPost(e) {
     const data = {};
     for (const [key, , required, type] of form.fields) {
       let value = String(params[key] || "").trim().slice(0, MAX_LENGTH);
-      if (type === "checkbox") value = value ? "Ja" : "Nej";
+      // Checkboxes and Yes/No choices: only "ja" counts as yes (the photo question sends "" for no)
+      if (type === "checkbox") value = value.toLowerCase() === "ja" ? "Ja" : "Nej";
       if (required && (!value || value === "Nej")) return reply(false, `missing ${key}`);
       data[key] = value;
     }
