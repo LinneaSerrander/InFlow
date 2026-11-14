@@ -45,6 +45,10 @@ const FORMS = {
       ["message", "Meddelande", false],
       // Added later, so it's last: older sheets only need a new heading at the end
       ["participant_birth_year", "Födelseår", true],
+      // Invoice address, also added later
+      ["address_street", "Gatuadress", true],
+      ["address_zip", "Postnummer", true],
+      ["address_city", "Ort", true],
     ],
     notify: (data) => ({
       subject: `Ny intresseanmälan: ${data.group}`,

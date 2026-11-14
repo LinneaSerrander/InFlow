@@ -103,6 +103,23 @@
             </fieldset>
           </div>
 
+          <!-- Address for the invoice -->
+          <fieldset class="form__group">
+            <legend>Faktureringsadress</legend>
+            <label>Gatuadress
+              <input type="text" name="address_street" autocomplete="street-address" required>
+            </label>
+            <div class="form__row">
+              <label>Postnummer
+                <input type="text" name="address_zip" inputmode="numeric" autocomplete="postal-code"
+                       pattern="[0-9]{3} ?[0-9]{2}" title="Skriv postnumret med fem siffror, t.ex. 582 22" required>
+              </label>
+              <label>Ort
+                <input type="text" name="address_city" autocomplete="address-level2" required>
+              </label>
+            </div>
+          </fieldset>
+
           <!-- Photo consent: an active Yes/No choice (a pre-ticked box is not valid consent
                under GDPR). "Nej" is sent as an empty value, which the script records as "Nej". -->
           <fieldset class="form__group form__choice">
