@@ -1,0 +1,19 @@
+# Vårtermin i Ekängen för födda 2017–2018: fredagar, vecka 9–21 2027 (utom vecka 12).
+
+day: fri
+start: "16:00"
+end: "16:50"
+title: Vt Ekängen, födda 2017-2018
+group: Vt Ekängen, födda 2017-2018   # used by the group filter and the sign-up form; spell it the same everywhere
+place: Ekängsskolans gymnastiksal
+leader: Linnea & Alice
+
+# The weeks the course runs (week 12 is skipped)
+weeks: [9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21]
+
+# Only spring term 2027 (weeks have no year, so without this it would repeat every year)
+from: "2027-03-01"
+until: "2027-05-30"
+
+# The group shows up in the sign-up form from this moment
+signup_opens: "2026-11-22 17:00"

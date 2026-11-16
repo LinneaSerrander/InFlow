@@ -1,0 +1,19 @@
+# Vårtermin i Åtvidaberg för födda 2020–2021: måndagar, vecka 9–17 2027 (utom vecka 13), 8 tillfällen.
+
+day: mon
+start: "16:00"
+end: "16:45"
+title: Vt Åtvidaberg, födda 2020-2021
+group: Vt Åtvidaberg, födda 2020-2021   # used by the group filter and the sign-up form; spell it the same everywhere
+place: Åtvidabergs sporthall, sal B
+leader: Alice
+
+# The weeks the course runs (week 13 is skipped: annandag påsk)
+weeks: [9, 10, 11, 12, 14, 15, 16, 17]
+
+# Only spring term 2027 (weeks have no year, so without this it would repeat every year)
+from: "2027-03-01"
+until: "2027-05-30"
+
+# The group shows up in the sign-up form from this moment
+signup_opens: "2026-11-22 17:00"

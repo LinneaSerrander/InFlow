@@ -193,7 +193,6 @@ function uppdateraMejllistor() {
   const rows = [];
   const allPlaced = new Set();
   const allSignedUp = new Set();
-  let anyStatus = false;
 
   for (const sheet of spreadsheet.getSheets()) {
     if (NOT_SIGNUP_SHEETS.includes(sheet.getName())) continue;
@@ -206,7 +205,6 @@ function uppdateraMejllistor() {
       .filter((i) => i >= 0);
     if (!emailCols.length) continue; // not a sign-up tab
     const statusCol = headings.indexOf("status");
-    if (statusCol >= 0) anyStatus = true;
 
     const placed = new Set();
     const signedUp = new Set();
@@ -229,24 +227,36 @@ function uppdateraMejllistor() {
 
   let sheet = spreadsheet.getSheetByName(MAIL_SHEET);
   if (!sheet) sheet = spreadsheet.insertSheet(MAIL_SHEET);
+  sheet.getDataRange().breakApart();
   sheet.clear();
-  sheet.getRange(1, 1).setValue(
-    `Uppdaterad ${Utilities.formatDate(new Date(), "Europe/Stockholm", "yyyy-MM-dd HH:mm")}. ` +
-    `Kopiera en cell med adresser och klistra in i Hemlig kopia (Bcc) i Gmail.` +
-    (anyStatus ? "" : ` "Har plats" fylls i när du skriver "Plats" i en kolumn som heter Status i kursflikarna.`)
-  );
+  // Description at the top of the tab
+  const info = [
+    ["Mejllistor"],
+    ["Så uppdaterar du listorna: klicka på InFlow → Uppdatera mejllistor i menyn högst upp (bredvid Hjälp). " +
+     "Listorna uppdateras inte av sig själva, så gör det innan du skickar ett mejl. Syns inte menyn? Ladda om sidan."],
+    ["Så skickar du: kopiera en cell med adresser och klistra in i Hemlig kopia (Bcc) i Gmail, aldrig i Till eller Kopia."],
+    ["Har plats: skriv rubriken Status i första lediga kolumnen i en kursflik och skriv Plats på raderna för dem som har fått plats. " +
+     "Alla anmälda: alla intresseanmälningar, även de som står på kö."],
+    [`Senast uppdaterad: ${Utilities.formatDate(new Date(), "Europe/Stockholm", "yyyy-MM-dd HH:mm")}`],
+  ];
+  sheet.getRange(1, 1, info.length, 1).setValues(info);
+  // The longer lines span all five columns, wrapped
+  sheet.getRange(2, 1, 3, 5).mergeAcross().setWrap(true).setVerticalAlignment("top");
+  sheet.getRange(1, 1).setFontSize(14).setFontWeight("bold");
+  sheet.getRange(5, 1).setFontStyle("italic").setFontColor("#6b4f3f");
+  const top = info.length + 2; // header row, after a blank row
   const header = ["Grupp", "Har plats", "Adresser – har plats", "Alla anmälda", "Adresser – alla anmälda"];
-  sheet.getRange(3, 1, 1, header.length).setValues([header]).setFontWeight("bold");
-  sheet.getRange(4, 1, rows.length, header.length).setValues(rows).setVerticalAlignment("top");
-  sheet.getRange(4 + rows.length - 1, 1, 1, header.length).setFontWeight("bold");
+  sheet.getRange(top, 1, 1, header.length).setValues([header]).setFontWeight("bold").setBackground("#f5f1ed");
+  sheet.getRange(top + 1, 1, rows.length, header.length).setValues(rows).setVerticalAlignment("top");
+  sheet.getRange(top + rows.length, 1, 1, header.length).setFontWeight("bold");
   sheet.setColumnWidth(1, 260);
   sheet.setColumnWidths(2, 1, 80);
   sheet.setColumnWidths(4, 1, 90);
   sheet.setColumnWidth(3, 420);
   sheet.setColumnWidth(5, 420);
-  sheet.getRange(4, 3, rows.length, 1).setWrap(true);
-  sheet.getRange(4, 5, rows.length, 1).setWrap(true);
-  sheet.setFrozenRows(3);
+  sheet.getRange(top + 1, 3, rows.length, 1).setWrap(true);
+  sheet.getRange(top + 1, 5, rows.length, 1).setWrap(true);
+  sheet.setFrozenRows(top);
   spreadsheet.setActiveSheet(sheet);
 }
 
