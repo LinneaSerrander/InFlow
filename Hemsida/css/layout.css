@@ -667,6 +667,79 @@
   margin-bottom: var(--space-2);
 }
 
+/* Information page: practical tips as small cards with an icon */
+.prose .info-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  padding: 0;
+  list-style: none;
+}
+
+.prose .info-tile {
+  margin: 0;
+  padding: var(--space-4) var(--space-3);
+  text-align: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.info-tile__icon {
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: 0 auto var(--space-2);
+  color: var(--color-button);
+}
+
+.prose .info-tile h3 {
+  margin: 0 0 var(--space-1);
+}
+
+.prose .info-tile p {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+/* Phones: one compact row per tip, icon on the left */
+@media (max-width: 48rem) {
+  .prose .info-tile {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: var(--space-3);
+    align-items: center;
+    padding: var(--space-3);
+    text-align: left;
+  }
+
+  .info-tile__icon {
+    grid-row: span 2;
+    width: 2.25rem;
+    height: 2.25rem;
+    margin: 0;
+  }
+}
+
+/* Information page: the terms as clickable boxes (same look as the courses) */
+.prose .courses {
+  margin-top: var(--space-4);
+}
+
+.prose .course__summary h3 {
+  margin: 0;
+}
+
+.prose .course__body > h4:first-child {
+  margin-top: 0;
+}
+
+/* A section that starts with its heading (e.g. Information page parts) */
+.prose > h2:first-child {
+  margin-top: 0;
+}
+
 .prose h3 {
   margin-top: var(--space-4);
   margin-bottom: var(--space-1);

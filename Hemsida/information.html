@@ -45,60 +45,100 @@
 
         <h2>Praktisk information</h2>
         <p>Det här är bra att tänka på inför varje lektion:</p>
-        <ul>
-          <li><strong>Vattenflaska:</strong> ta med en egen vattenflaska.</li>
-          <li><strong>Skor eller strumpor:</strong> vi dansar i rena inneskor eller i strumpor.</li>
-          <li><strong>Kläder:</strong> sköna kläder som man kan röra sig fritt i.</li>
+        <ul class="info-tiles">
+          <li class="info-tile">
+            <svg class="info-tile__icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9.5" y="2" width="5" height="3" rx="1"/><path d="M10 5v1.5L8 9.5V20a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V9.5l-2-3V5"/><path d="M8 13h8"/><path d="M8 17h8"/></svg>
+            <h3>Vattenflaska</h3>
+            <p>Ta med en egen vattenflaska.</p>
+          </li>
+          <li class="info-tile">
+            <svg class="info-tile__icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 16.5V11l3.5-.8L7.5 7h3l.8 2.5c2.4 1.4 5.6 1.6 8.2 2.6A2.5 2.5 0 0 1 21.5 14.4v2.1z"/><path d="M2 16.5h19.5V19H2z"/><path d="M9 10.5l1.2 1.2"/><path d="M11.5 10.8l1.2 1.2"/></svg>
+            <h3>Skor eller strumpor</h3>
+            <p>Vi dansar i rena inneskor eller i strumpor.</p>
+          </li>
+          <li class="info-tile">
+            <svg class="info-tile__icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.4 3.5 16 2a4 4 0 0 1-8 0L3.6 3.5a2 2 0 0 0-1.3 2.2l.6 3.5a1 1 0 0 0 1 .8H6v10a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V10h2.2a1 1 0 0 0 1-.8l.6-3.5a2 2 0 0 0-1.4-2.2z"/></svg>
+            <h3>Sköna kläder</h3>
+            <p>Kläder som man kan röra sig fritt i.</p>
+          </li>
         </ul>
+      </div>
+    </section>
 
-        <h2 id="villkor">Villkor</h2>
+    <!-- Three parts with alternating backgrounds: praktiskt (beige), villkor (white), frågor (beige).
+         Each part of the terms is a <details> box, same style as the courses on kurser.html. -->
+    <section class="section section--alt" id="villkor">
+      <div class="container prose">
+        <h2>Villkor</h2>
         <p>Villkoren gäller när ditt barn har fått en plats och du har fått vår bekräftelse.</p>
 
-        <h3>Ångerrätt</h3>
-        <p>Eftersom anmälan görs via vår hemsida och mejl har du 14 dagars ångerrätt enligt distansavtalslagen. Ångerfristen börjar den dag du får vår bekräftelse om att ditt barn har fått en plats.</p>
-        <ul>
-          <li>Vill du ångra dig, mejla oss på <a href="mailto:info@inflowstudio.se">info@inflowstudio.se</a> inom 14 dagar. Skriv deltagarens namn och vilken kurs det gäller. Du kan också använda Konsumentverkets standardformulär för ångerrätt, men det behövs inte.</li>
-          <li>Om kursen börjar innan ångerfristen har gått ut, och du har bett om att ditt barn ska få börja, betalar du för de tillfällen som har hunnit genomföras när du ångrar dig.</li>
-          <li>Har du redan betalat får du tillbaka pengarna senast 14 dagar efter att vi fick ditt meddelande.</li>
-        </ul>
+        <div class="courses">
+          <details class="card course">
+            <summary class="course__summary"><span class="course__title"><h3>Ångerrätt</h3></span></summary>
+            <div class="course__content">
+              <div class="course__body">
+              <p>Eftersom anmälan görs via vår hemsida och mejl har du 14 dagars ångerrätt enligt distansavtalslagen. Ångerfristen börjar den dag du får vår bekräftelse om att ditt barn har fått en plats.</p>
+              <ul>
+                <li>Vill du ångra dig, mejla oss på <a href="mailto:info@inflowstudio.se">info@inflowstudio.se</a> inom 14 dagar. Skriv deltagarens namn och vilken kurs det gäller. Du kan också använda Konsumentverkets standardformulär för ångerrätt, men det behövs inte.</li>
+                <li>Om kursen börjar innan ångerfristen har gått ut, och du har bett om att ditt barn ska få börja, betalar du för de tillfällen som har hunnit genomföras när du ångrar dig.</li>
+                <li>Har du redan betalat får du tillbaka pengarna senast 14 dagar efter att vi fick ditt meddelande.</li>
+              </ul>
+              </div>
+            </div>
+          </details>
+          <details class="card course">
+            <summary class="course__summary"><span class="course__title"><h3>Sjukdom, skada eller flytt</h3></span></summary>
+            <div class="course__content">
+              <div class="course__body">
+              <p>När ångerfristen har gått ut är platsen bindande och kursavgiften betalas inte tillbaka. Undantag gör vi om deltagaren inte kan fortsätta kursen på grund av:</p>
+              <ul>
+                <li><strong>Längre sjukdom eller skada</strong> som gör att deltagaren inte kan dansa resten av kursen. Vi behöver ett intyg från läkare eller annan vårdpersonal.</li>
+                <li><strong>Flytt</strong> till en annan ort, så att det inte längre går att ta sig till kursen.</li>
+              </ul>
+              <p>Då får du tillbaka avgiften för de tillfällen som är kvar, räknat från den dag vi får ditt meddelande. Mejla oss så snart som möjligt på <a href="mailto:info@inflowstudio.se">info@inflowstudio.se</a>. Om du vill kan du i stället få avgiften tillgodo på en senare kurs.</p>
+              <p>Enstaka missade tillfällen, till exempel vid förkylning, ger ingen återbetalning.</p>
+              </div>
+            </div>
+          </details>
+          <details class="card course">
+            <summary class="course__summary"><span class="course__title"><h3>Anmälningsvillkor</h3></span></summary>
+            <div class="course__content">
+              <div class="course__body">
+              <h4>Anmälan och plats</h4>
+              <ul>
+                <li>En intresseanmälan är inte bindande och ger ingen garanterad plats.</li>
+                <li>Vi går igenom alla anmälningar och mejlar besked om ditt barn har fått en plats eller står på kö. Platsen är bokad när du har fått vår bekräftelse.</li>
+                <li>Den vårdnadshavare som gör anmälan ansvarar för att kursavgiften betalas.</li>
+              </ul>
+              <h4>Betalning</h4>
+              <ul>
+                <li>Du får en faktura till den faktureringsadress du har angett. Betala senast det förfallodatum som står på fakturan.</li>
+                <li>Alla priser på hemsidan är inklusive moms.</li>
+                <li>Är fakturan inte betald i tid kan vi ge platsen till någon som står på kö.</li>
+              </ul>
+              <h4>Om vi ändrar eller ställer in</h4>
+              <ul>
+                <li>Om för få anmäler sig kan vi ställa in en kurs. Då får du tillbaka hela avgiften.</li>
+                <li>Om vi behöver ställa in ett enskilt tillfälle, till exempel på grund av sjukdom eller att lokalen inte går att använda, försöker vi ersätta det med ett nytt tillfälle. Går det inte får du tillbaka avgiften för det tillfället.</li>
+                <li>Om vi behöver ändra tid eller lokal meddelar vi det i så god tid som möjligt.</li>
+              </ul>
+              <h4>Under kursen</h4>
+              <ul>
+                <li>Vårdnadshavare ansvarar för barnet före och efter lektionen, till exempel vid lämning och hämtning.</li>
+                <li>Deltagarna är inte olycksfallsförsäkrade genom oss. Vi rekommenderar att barnet har en egen olycksfallsförsäkring, till exempel en barnförsäkring.</li>
+                <li>Vi ansvarar inte för personliga tillhörigheter som tas med till lektionerna.</li>
+                <li>Berätta gärna i anmälan om det finns något vi behöver veta, till exempel allergier, för att ditt barn ska kunna delta tryggt.</li>
+                <li>Foto och video tar vi bara av barn vars vårdnadshavare har svarat ja i anmälan. Läs mer i vår <a href="integritetspolicy.html">integritetspolicy</a>.</li>
+              </ul>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
 
-        <h3>Sjukdom, skada eller flytt</h3>
-        <p>När ångerfristen har gått ut är platsen bindande och kursavgiften betalas inte tillbaka. Undantag gör vi om deltagaren inte kan fortsätta kursen på grund av:</p>
-        <ul>
-          <li><strong>Längre sjukdom eller skada</strong> som gör att deltagaren inte kan dansa resten av kursen. Vi behöver ett intyg från läkare eller annan vårdpersonal.</li>
-          <li><strong>Flytt</strong> till en annan ort, så att det inte längre går att ta sig till kursen.</li>
-        </ul>
-        <p>Då får du tillbaka avgiften för de tillfällen som är kvar, räknat från den dag vi får ditt meddelande. Mejla oss så snart som möjligt på <a href="mailto:info@inflowstudio.se">info@inflowstudio.se</a>. Om du vill kan du i stället få avgiften tillgodo på en senare kurs.</p>
-        <p>Enstaka missade tillfällen, till exempel vid förkylning, ger ingen återbetalning.</p>
-
-        <h3>Anmälningsvillkor</h3>
-        <h4>Anmälan och plats</h4>
-        <ul>
-          <li>En intresseanmälan är inte bindande och ger ingen garanterad plats.</li>
-          <li>Vi går igenom alla anmälningar och mejlar besked om ditt barn har fått en plats eller står på kö. Platsen är bokad när du har fått vår bekräftelse.</li>
-          <li>Den vårdnadshavare som gör anmälan ansvarar för att kursavgiften betalas.</li>
-        </ul>
-        <h4>Betalning</h4>
-        <ul>
-          <li>Du får en faktura till den faktureringsadress du har angett. Betala senast det förfallodatum som står på fakturan.</li>
-          <li>Alla priser på hemsidan är inklusive moms.</li>
-          <li>Är fakturan inte betald i tid kan vi ge platsen till någon som står på kö.</li>
-        </ul>
-        <h4>Om vi ändrar eller ställer in</h4>
-        <ul>
-          <li>Om för få anmäler sig kan vi ställa in en kurs. Då får du tillbaka hela avgiften.</li>
-          <li>Om vi behöver ställa in ett enskilt tillfälle, till exempel på grund av sjukdom eller att lokalen inte går att använda, försöker vi ersätta det med ett nytt tillfälle. Går det inte får du tillbaka avgiften för det tillfället.</li>
-          <li>Om vi behöver ändra tid eller lokal meddelar vi det i så god tid som möjligt.</li>
-        </ul>
-        <h4>Under kursen</h4>
-        <ul>
-          <li>Vårdnadshavare ansvarar för barnet före och efter lektionen, till exempel vid lämning och hämtning.</li>
-          <li>Deltagarna är inte olycksfallsförsäkrade genom oss. Vi rekommenderar att barnet har en egen olycksfallsförsäkring, till exempel en barnförsäkring.</li>
-          <li>Vi ansvarar inte för personliga tillhörigheter som tas med till lektionerna.</li>
-          <li>Berätta gärna i anmälan om det finns något vi behöver veta, till exempel allergier, för att ditt barn ska kunna delta tryggt.</li>
-          <li>Foto och video tar vi bara av barn vars vårdnadshavare har svarat ja i anmälan. Läs mer i vår <a href="integritetspolicy.html">integritetspolicy</a>.</li>
-        </ul>
-
+    <section class="section">
+      <div class="container prose">
         <h2>Frågor och klagomål</h2>
         <p>Hör av dig till oss på <a href="mailto:info@inflowstudio.se">info@inflowstudio.se</a> om du har frågor eller inte är nöjd, så försöker vi lösa det tillsammans. Om vi inte kommer överens kan du vända dig till Allmänna reklamationsnämnden (<a href="https://www.arn.se" target="_blank" rel="noopener">arn.se</a>).</p>
       </div>
