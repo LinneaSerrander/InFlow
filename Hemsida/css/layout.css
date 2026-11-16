@@ -203,9 +203,23 @@
     padding: var(--space-3);
   }
 
-  /* Phone menu: the course pages are always shown, indented under "Kurser" */
-  .nav__item--sub > a::after {
+  /* Phone menu: tapping "Kurser" shows its pages, indented underneath
+     (js/main.js adds .is-expanded). The arrow points up while open. */
+  .nav__item--sub:hover > a::after,
+  .nav__item--sub:focus-within > a::after {
+    transform: translateY(-0.2em) rotate(45deg);
+  }
+
+  .nav__item--sub.is-expanded > a::after {
+    transform: translateY(0.05em) rotate(225deg);
+  }
+
+  .nav__sub {
     display: none;
+  }
+
+  .nav__item--sub.is-expanded .nav__sub {
+    display: block;
   }
 
   .nav__sub {
