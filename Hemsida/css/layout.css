@@ -222,6 +222,13 @@
     display: block;
   }
 
+  /* A tap counts as hover/focus on phones: don't let the desktop dropdown's
+     sideways shift push the sub-pages off screen */
+  .nav__item--sub:hover .nav__sub,
+  .nav__item--sub:focus-within .nav__sub {
+    transform: none;
+  }
+
   .nav__sub {
     position: static;
     min-width: 0;
