@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mejlmallar – InFlow STUDIO</title>
+<style>
+  :root { --brown: #6b4f3f; --gold: #d0ae8b; --bg: #f5f1ed; --text: #1a1a1a; }
+  * { box-sizing: border-box; }
+  body { font-family: Arial, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 24px 16px; }
+  .page { max-width: 760px; margin: 0 auto; }
+  h1 { font-family: Georgia, serif; font-weight: normal; font-size: 26px; margin: 0 0 4px; }
+  .lead { color: #57504a; margin: 0 0 20px; line-height: 1.5; }
+  .panel { background: #fff; border: 1px solid var(--gold); padding: 18px 20px; margin-bottom: 20px; }
+  .fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+  label { display: grid; gap: 6px; font-size: 13px; font-weight: bold; color: var(--brown); }
+  select, input { width: 100%; min-width: 0; font: inherit; font-weight: normal; color: var(--text); padding: 8px 10px; border: 1px solid #c9b8a8; background: #fff; }
+  .kind { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .kind button { font: inherit; padding: 8px 14px; border: 1px solid var(--brown); background: #fff; color: var(--brown); cursor: pointer; }
+  .kind button[aria-pressed="true"] { background: var(--brown); color: #fff; }
+  .subject { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; }
+  .subject code { flex: 1; min-width: 200px; font-family: Arial, sans-serif; font-size: 14px; background: var(--bg); padding: 8px 10px; }
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+  .btn { font: inherit; font-weight: bold; padding: 10px 16px; background: var(--brown); color: #fff; border: 0; cursor: pointer; }
+  .btn--ghost { background: #fff; color: var(--brown); border: 1px solid var(--brown); }
+  .toast { color: #2e7d32; font-size: 14px; align-self: center; min-height: 1em; }
+  .preview { background: #fff; border: 1px dashed var(--gold); padding: 24px; overflow-x: auto; }
+  .help ol { margin: 8px 0 0; padding-left: 20px; line-height: 1.6; font-size: 14px; }
+  .warn { font-size: 13px; color: #8a5a00; margin-top: 10px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Mejlmallar</h1>
+  <p class="lead">Välj mall och kurs och skriv in namnen. Mejlet nedanför uppdateras direkt. Kopiera sedan och klistra in i Gmail.</p>
+
+  <div class="panel">
+    <div class="kind" role="group" aria-label="Mall">
+      <button type="button" data-kind="plats" aria-pressed="true">Plats bekräftad</button>
+      <button type="button" data-kind="ko" aria-pressed="false">Plats i kö</button>
+    </div>
+    <div class="fields">
+      <label>Kurs
+        <select id="course"></select>
+      </label>
+      <label>Barnets förnamn
+        <input id="child" type="text" placeholder="t.ex. Ella">
+      </label>
+      <label>Vårdnadshavarens förnamn
+        <input id="parent" type="text" placeholder="t.ex. Anna">
+      </label>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="subject">
+      <strong>Ämne:</strong>
+      <code id="subject"></code>
+    </div>
+    <div class="actions">
+      <button class="btn" type="button" id="copyMail">Kopiera mejlet</button>
+      <button class="btn btn--ghost" type="button" id="copySubject">Kopiera ämnesraden</button>
+      <span class="toast" id="toast" role="status"></span>
+    </div>
+    <div class="preview" id="preview"></div>
+    <p class="warn" id="warn"></p>
+  </div>
+
+  <div class="panel help">
+    <strong>Så skickar du</strong>
+    <ol>
+      <li>Öppna Gmail (info@inflowstudio.se) och klicka på <b>Skriv</b>, eller svara på anmälningsmejlet.</li>
+      <li>Klicka på <b>Kopiera ämnesraden</b> och klistra in i ämnesfältet med <b>Ctrl+V</b>.</li>
+      <li>Klicka på <b>Kopiera mejlet</b>, klicka i textfältet i Gmail och klistra in med <b>Ctrl+V</b>.</li>
+      <li>Läs igenom och skicka. Mallen har redan er gemensamma signatur, så välj "Ingen signatur" i Gmail om den annars hamnar dubbelt.</li>
+    </ol>
+    <p class="warn">Kursuppgifterna (tider, platser, priser, startdatum) står längst ner i den här filen, i listan <code>COURSES</code>. Ändra där om något ändras.</p>
+  </div>
+</div>
+
+<script>
+// ===== Course details. Edit here when something changes. ==================
+// start: the first lesson, written out. price: what the family pays (incl. moms).
+const COURSES = [
+  { name: "Vårtermin i Ekängen, födda 2019–2020", time: "Söndagar kl. 16:15–17:00", place: "Bärstadskolans gymnastiksal, Linköping",
+    start: "Söndag 7 mars (vecka 9)", sessions: "12 tillfällen", teachers: "Linnea och Alice", price: "1 275 kr" },
+  { name: "Vårtermin i Ekängen, födda 2017–2018", time: "Fredagar kl. 16:00–16:50", place: "Ekängsskolans gymnastiksal, Linköping",
+    start: "Fredag 5 mars (vecka 9)", sessions: "12 tillfällen", teachers: "Linnea och Alice", price: "1 325 kr" },
+  { name: "Vårtermin i Ekängen, födda 2014–2016", time: "Söndagar kl. 15:00–16:00", place: "Ekängsskolans gymnastiksal, Linköping",
+    start: "Söndag 7 mars (vecka 9)", sessions: "12 tillfällen", teachers: "Linnea och Alice", price: "1 375 kr" },
+  { name: "Vårtermin i Åtvidaberg, födda 2020–2021", time: "Måndagar kl. 16:00–16:45", place: "Åtvidabergs sporthall, sal B",
+    start: "Måndag 1 mars (vecka 9)", sessions: "12 tillfällen", teachers: "Alice", price: "925 kr" },
+  { name: "Vårtermin i Åtvidaberg, födda 2017–2019", time: "Måndagar kl. 16:50–17:40", place: "Åtvidabergs sporthall, sal B",
+    start: "Måndag 1 mars (vecka 9)", sessions: "12 tillfällen", teachers: "Alice", price: "925 kr" },
+  { name: "Julläger i Åtvidaberg, födda 2020–2021", time: "Lördag 9 januari kl. 10:00–12:00<br>Söndag 10 januari kl. 10:00–12:00", place: "Sporthallen, sal B, Åtvidaberg",
+    start: "Lördag 9 januari", sessions: "2 tillfällen", teachers: "Linnea och Alice", price: "450 kr" },
+  { name: "Julläger i Åtvidaberg, födda 2017–2019", time: "Fredag 8 januari kl. 16:00–18:00<br>Lördag 9 januari kl. 13:00–15:00<br>Söndag 10 januari kl. 13:00–15:00", place: "Sporthallen, sal B, Åtvidaberg",
+    start: "Fredag 8 januari", sessions: "3 tillfällen", teachers: "Linnea och Alice", price: "495 kr" },
+];
+
+// ===== Email building blocks (inline styles so they survive pasting into Gmail)
+const C = { text: "#1a1a1a", brown: "#6b4f3f", muted: "#57504a", gold: "#d0ae8b", beige: "#f5f1ed" };
+const FONT = "font-family:Arial,Helvetica,sans-serif;";
+const p = (html) => `<p style="${FONT}font-size:15px;line-height:23px;color:${C.text};margin:0 0 14px;">${html}</p>`;
+const h = (text) => `<p style="font-family:Georgia,'Times New Roman',serif;font-size:18px;color:${C.brown};margin:22px 0 8px;">${text}</p>`;
+const link = (href, text) => `<a href="${href}" style="color:${C.brown};text-decoration:underline;">${text}</a>`;
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function factsTable(c) {
+  const row = (label, value, last) =>
+    `<tr><td style="${FONT}font-size:14px;line-height:21px;color:${C.brown};font-weight:bold;padding:8px 16px 8px 0;vertical-align:top;white-space:nowrap;${last ? "" : `border-bottom:1px solid ${C.gold};`}">${label}</td>` +
+    `<td style="${FONT}font-size:14px;line-height:21px;color:${C.text};padding:8px 0;vertical-align:top;${last ? "" : `border-bottom:1px solid ${C.gold};`}">${value}</td></tr>`;
+  return `<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background:${C.beige};width:100%;max-width:520px;margin:4px 0 18px;">` +
+    `<tr><td style="padding:14px 20px;"><table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;width:100%;">` +
+    row("Kurs", c.name) + row("Tid", c.time) + row("Plats", c.place) + row("Första lektionen", c.start) +
+    row("Antal tillfällen", c.sessions) + row("Lärare", c.teachers) + row("Pris", c.price, true) +
+    `</table></td></tr></table>`;
+}
+
+const header =
+  `<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;margin:0 0 18px;"><tr><td>` +
+  `<a href="https://inflowstudio.se"><img src="https://inflowstudio.se/assets/images/logo-mejl.png" width="160" height="89" alt="InFlow STUDIO" style="display:block;border:0;"></a>` +
+  `</td></tr></table>`;
+
+const signature =
+  `<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;${FONT}color:${C.text};margin-top:8px;"><tr>` +
+  `<td style="padding:0 0 0 14px;border-left:2px solid ${C.gold};vertical-align:middle;font-size:13px;line-height:20px;">` +
+  `<span style="font-family:Georgia,'Times New Roman',serif;font-size:17px;color:${C.text};">Linnea &amp; Alice</span><br>` +
+  `<span style="color:${C.brown};">InFlow STUDIO</span><br>` +
+  `<span style="color:${C.muted};">Dans, träning och hälsa · Linköping &amp; Åtvidaberg</span><br>` +
+  `<a href="tel:+46722392001" style="color:${C.text};text-decoration:none;">Linnea 072-239 20 01</a> · <a href="tel:+46707683598" style="color:${C.text};text-decoration:none;">Alice 070-768 35 98</a><br>` +
+  `<a href="https://inflowstudio.se" style="color:${C.brown};text-decoration:none;">inflowstudio.se</a> · ` +
+  `<a href="https://www.instagram.com/inflow___studio" style="color:${C.brown};text-decoration:none;">Instagram: @inflow___studio</a>` +
+  `</td></tr></table>`;
+
+const TEMPLATES = {
+  plats: {
+    subject: (c, child) => `Välkommen till InFlow STUDIO – ${child} har fått en plats!`,
+    body: (c, child, parent) =>
+      header +
+      p(`Hej ${parent}!`) +
+      p(`Vad roligt att ${child} vill dansa med oss! Vi bekräftar härmed att ${child} har fått en plats i <strong>${c.name}</strong>.`) +
+      factsTable(c) +
+      h("Betalning") +
+      p(`Vi skickar en faktura till den faktureringsadress du angav i anmälan. Betala senast det förfallodatum som står på fakturan, så är platsen klar.`) +
+      h("Inför första lektionen") +
+      p(`Ta med en vattenflaska och sköna kläder som man kan röra sig fritt i. Vi dansar i rena inneskor eller i strumpor.`) +
+      h("Ångerrätt och villkor") +
+      p(`Du har 14 dagars ångerrätt räknat från i dag, när du får den här bekräftelsen. Vill du ångra platsen svarar du bara på det här mejlet. Våra villkor, bland annat om sjukdom, skada eller flytt, hittar du på ${link("https://inflowstudio.se/information.html", "inflowstudio.se/information")}.`) +
+      p(`Har du frågor är det bara att svara på det här mejlet. Vi ser fram emot att dansa med ${child}!`) +
+      p(`Varma hälsningar`) +
+      signature,
+  },
+  ko: {
+    subject: (c, child) => `${child} står på kö till ${c.name}`,
+    body: (c, child, parent) =>
+      header +
+      p(`Hej ${parent}!`) +
+      p(`Tack för din intresseanmälan till <strong>${c.name}</strong>! Just nu är gruppen tyvärr full, men ${child} står på vår kölista.`) +
+      p(`Så fort en plats blir ledig hör vi av oss i turordning. Om tillräckligt många står på kö kan vi också öppna en ny grupp.`) +
+      p(`Du behöver inte göra något just nu. Vill du ta bort ${child} från kön svarar du bara på det här mejlet.`) +
+      p(`Under tiden kan du följa oss på ${link("https://www.instagram.com/inflow___studio", "Instagram")} för att se vad som händer i studion.`) +
+      p(`Varma hälsningar`) +
+      signature,
+  },
+};
+
+// ===== Page logic ========================================================
+const $ = (id) => document.getElementById(id);
+let kind = "plats";
+COURSES.forEach((c, i) => $("course").add(new Option(c.name, i)));
+
+function render() {
+  const c = COURSES[$("course").value];
+  const child = esc($("child").value.trim()) || "[barnets namn]";
+  const parent = esc($("parent").value.trim()) || "[vårdnadshavare]";
+  const t = TEMPLATES[kind];
+  $("subject").innerHTML = t.subject(c, child);
+  $("preview").innerHTML = t.body(c, child, parent);
+  $("warn").textContent = (!$("child").value.trim() || !$("parent").value.trim())
+    ? "Fyll i barnets och vårdnadshavarens namn innan du kopierar." : "";
+}
+
+document.querySelectorAll(".kind button").forEach((b) => b.addEventListener("click", () => {
+  kind = b.dataset.kind;
+  document.querySelectorAll(".kind button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+  render();
+}));
+["course", "child", "parent"].forEach((id) => $(id).addEventListener("input", render));
+
+// Copy as formatted text, the same as selecting it with the mouse and pressing Ctrl+C
+function copyElement(el, message) {
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+  const ok = document.execCommand("copy");
+  sel.removeAllRanges();
+  $("toast").textContent = ok ? message : "Det gick inte att kopiera – markera texten och tryck Ctrl+C.";
+  setTimeout(() => ($("toast").textContent = ""), 3000);
+}
+$("copyMail").addEventListener("click", () => copyElement($("preview"), "Mejlet är kopierat ✓"));
+$("copySubject").addEventListener("click", () => copyElement($("subject"), "Ämnesraden är kopierad ✓"));
+
+render();
+</script>
+</body>
+</html>
