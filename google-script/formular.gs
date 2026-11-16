@@ -13,6 +13,9 @@
  *   3. emails NOTIFY_EMAIL — for sign-ups only that one arrived and for which
  *      group; the personal details stay in the sheet.
  *
+ * It also adds the menu "InFlow → Uppdatera mejllistor" to the sheet, which
+ * collects the email addresses per group (see Mejllistor further down).
+ *
  * After changing this code: Deploy → Manage deployments → ✏️ → Version:
  * "New version" → Deploy. That keeps the same web app URL.
  */
@@ -161,6 +164,90 @@ function groupSheetName(group) {
 
 function sheetUrl() {
   return SpreadsheetApp.getActiveSpreadsheet().getUrl();
+}
+
+// ===== Mejllistor =========================================================
+//
+// Adds a menu "InFlow → Uppdatera mejllistor" to the sheet. It collects the
+// guardians' email addresses from every sign-up tab into the tab
+// "Mejllistor": one row per group, ready to paste into Bcc in Gmail.
+//
+// Optional: add a column called "Status" at the end of a sign-up tab and
+// write "Plats" for those who got a place. They then also get their own
+// list, "Har plats" (handy for course information). Others, e.g. "Kö", are
+// only in "Alla anmälda".
+
+const MAIL_SHEET = "Mejllistor";
+const NOT_SIGNUP_SHEETS = ["Meddelanden", MAIL_SHEET];
+
+// Runs by itself when the sheet is opened
+function onOpen() {
+  SpreadsheetApp.getUi()
+    .createMenu("InFlow")
+    .addItem("Uppdatera mejllistor", "uppdateraMejllistor")
+    .addToUi();
+}
+
+function uppdateraMejllistor() {
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  const rows = [];
+  const allPlaced = new Set();
+  const allSignedUp = new Set();
+  let anyStatus = false;
+
+  for (const sheet of spreadsheet.getSheets()) {
+    if (NOT_SIGNUP_SHEETS.includes(sheet.getName())) continue;
+    const values = sheet.getDataRange().getDisplayValues();
+    if (values.length < 2) continue;
+
+    const headings = values[0].map((h) => String(h).trim().toLowerCase());
+    const emailCols = headings
+      .map((h, i) => (h.startsWith("e-post") ? i : -1))
+      .filter((i) => i >= 0);
+    if (!emailCols.length) continue; // not a sign-up tab
+    const statusCol = headings.indexOf("status");
+    if (statusCol >= 0) anyStatus = true;
+
+    const placed = new Set();
+    const signedUp = new Set();
+    for (const row of values.slice(1)) {
+      const status = statusCol >= 0 ? String(row[statusCol]).trim().toLowerCase() : "";
+      for (const col of emailCols) {
+        const email = String(row[col]).trim().toLowerCase();
+        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) continue;
+        signedUp.add(email);
+        allSignedUp.add(email);
+        if (status.startsWith("plats")) {
+          placed.add(email);
+          allPlaced.add(email);
+        }
+      }
+    }
+    rows.push([sheet.getName(), placed.size, [...placed].join(", "), signedUp.size, [...signedUp].join(", ")]);
+  }
+  rows.push(["Alla kurser", allPlaced.size, [...allPlaced].join(", "), allSignedUp.size, [...allSignedUp].join(", ")]);
+
+  let sheet = spreadsheet.getSheetByName(MAIL_SHEET);
+  if (!sheet) sheet = spreadsheet.insertSheet(MAIL_SHEET);
+  sheet.clear();
+  sheet.getRange(1, 1).setValue(
+    `Uppdaterad ${Utilities.formatDate(new Date(), "Europe/Stockholm", "yyyy-MM-dd HH:mm")}. ` +
+    `Kopiera en cell med adresser och klistra in i Hemlig kopia (Bcc) i Gmail.` +
+    (anyStatus ? "" : ` "Har plats" fylls i när du skriver "Plats" i en kolumn som heter Status i kursflikarna.`)
+  );
+  const header = ["Grupp", "Har plats", "Adresser – har plats", "Alla anmälda", "Adresser – alla anmälda"];
+  sheet.getRange(3, 1, 1, header.length).setValues([header]).setFontWeight("bold");
+  sheet.getRange(4, 1, rows.length, header.length).setValues(rows).setVerticalAlignment("top");
+  sheet.getRange(4 + rows.length - 1, 1, 1, header.length).setFontWeight("bold");
+  sheet.setColumnWidth(1, 260);
+  sheet.setColumnWidths(2, 1, 80);
+  sheet.setColumnWidths(4, 1, 90);
+  sheet.setColumnWidth(3, 420);
+  sheet.setColumnWidth(5, 420);
+  sheet.getRange(4, 3, rows.length, 1).setWrap(true);
+  sheet.getRange(4, 5, rows.length, 1).setWrap(true);
+  sheet.setFrozenRows(3);
+  spreadsheet.setActiveSheet(sheet);
 }
 
 // Run this once from the Apps Script editor (select it, click ▶ Kör/Run) to
