@@ -44,19 +44,19 @@
           <h1>Kurser</h1>
           <p>Här hittar du våra kommande kurser. Anmäl intresse via <a href="anmalan.html">intresseanmälan</a>. I <a href="kursschema.html">kursschemat</a> ser du alla pass under veckan.</p>
         </div>
-        <!-- Seat status, next to each heading. Pick one:
-               <span class="status status--many">Anmälan öppen</span>
-               <span class="status status--many">Platser kvar</span>
-               <span class="status status--few">Några platser kvar</span>
-               <span class="status status--full">Fullt – ställ dig i kö</span>
-               <span class="status status--closed">Anmälan ej öppen</span> -->
+        <!-- Seat status, next to each heading. Write any text, and pick the color
+             with the class: status--green, status--yellow, status--orange,
+             status--red or status--grey. E.g.:
+               <span class="status status--green">Anmälan öppen</span>
+               <span class="status status--yellow">Några platser kvar</span>
+               <span class="status status--red">Fullt – ställ dig i kö</span> -->
         <!-- One course per row; only the heading shows until it's clicked (<details>).
              To add a picture, put it right after </div> of course__body:
              <img class="course__image" src="assets/images/..." alt="..."> -->
         <div class="courses">
           <details class="card course course--winter">
             <summary class="course__summary">
-              <span class="course__title"><h3>Julläger i Åtvidaberg, födda 2020–2021</h3><span class="status status--many">Platser kvar</span></span>
+              <span class="course__title"><h3>Julläger i Åtvidaberg, födda 2020–2021</h3><span class="status status--green">Anmälan öppen</span></span>
             </summary>
             <div class="course__content">
               <div class="course__body">
@@ -72,7 +72,7 @@
           </details>
           <details class="card course course--winter">
             <summary class="course__summary">
-              <span class="course__title"><h3>Julläger i Åtvidaberg, födda 2017–2019</h3><span class="status status--many">Platser kvar</span></span>
+              <span class="course__title"><h3>Julläger i Åtvidaberg, födda 2017–2019</h3><span class="status status--yellow">Anmälan öppen</span></span>
             </summary>
             <div class="course__content">
               <div class="course__body">
@@ -88,7 +88,7 @@
           </details>
           <details class="card course">
             <summary class="course__summary">
-              <span class="course__title"><h3>Vårtermin i Åtvidaberg, födda 2020–2021</h3><span class="status status--many">Anmälan öppen</span></span>
+              <span class="course__title"><h3>Vårtermin i Åtvidaberg, födda 2020–2021</h3><span class="status status--green">Anmälan öppen</span></span>
             </summary>
             <div class="course__content">
               <div class="course__body">
@@ -104,7 +104,7 @@
           </details>
           <details class="card course">
             <summary class="course__summary">
-              <span class="course__title"><h3>Vårtermin i Åtvidaberg, födda 2017–2019</h3><span class="status status--many">Anmälan öppen</span></span>
+              <span class="course__title"><h3>Vårtermin i Åtvidaberg, födda 2017–2019</h3><span class="status status--green">Anmälan öppen</span></span>
             </summary>
             <div class="course__content">
               <div class="course__body">
@@ -120,7 +120,7 @@
           </details>
           <details class="card course">
             <summary class="course__summary">
-              <span class="course__title"><h3>Vårtermin i Ekängen, födda 2014–2016</h3><span class="status status--many">Anmälan öppen</span></span>
+              <span class="course__title"><h3>Vårtermin i Ekängen, födda 2014–2016</h3><span class="status status--green">Anmälan öppen</span></span>
             </summary>
             <div class="course__content">
               <div class="course__body">
@@ -136,7 +136,7 @@
           </details>
           <details class="card course">
             <summary class="course__summary">
-              <span class="course__title"><h3>Vårtermin i Ekängen, födda 2017–2018</h3><span class="status status--many">Anmälan öppen</span></span>
+              <span class="course__title"><h3>Vårtermin i Ekängen, födda 2017–2018</h3><span class="status status--yellow">Anmälan öppen</span></span>
             </summary>
             <div class="course__content">
               <div class="course__body">
@@ -152,7 +152,7 @@
           </details>
           <details class="card course">
             <summary class="course__summary">
-              <span class="course__title"><h3>Vårtermin i Ekängen, födda 2019–2020</h3><span class="status status--many">Anmälan öppen</span></span>
+              <span class="course__title"><h3>Vårtermin i Ekängen, födda 2019–2020</h3><span class="status status--orange">Anmälan öppen</span></span>
             </summary>
             <div class="course__content">
               <div class="course__body">
