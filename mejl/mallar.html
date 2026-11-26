@@ -32,7 +32,7 @@
 <body>
 <div class="page">
   <h1>Mejlmallar</h1>
-  <p class="lead">Välj mall och kurs och skriv in namnen. Mejlet nedanför uppdateras direkt. Kopiera sedan och klistra in i Gmail.</p>
+  <p class="lead">Välj mall och kurs. Mejlet nedanför uppdateras direkt. Det står inga namn i det, så samma mejl kan skickas till alla i gruppen på en gång.</p>
 
   <div class="panel">
     <div class="kind" role="group" aria-label="Mall">
@@ -42,12 +42,6 @@
     <div class="fields">
       <label>Kurs
         <select id="course"></select>
-      </label>
-      <label>Barnets förnamn
-        <input id="child" type="text" placeholder="t.ex. Ella">
-      </label>
-      <label>Vårdnadshavarens förnamn
-        <input id="parent" type="text" placeholder="t.ex. Anna">
       </label>
     </div>
   </div>
@@ -63,13 +57,13 @@
       <span class="toast" id="toast" role="status"></span>
     </div>
     <div class="preview" id="preview"></div>
-    <p class="warn" id="warn"></p>
   </div>
 
   <div class="panel help">
     <strong>Så skickar du</strong>
     <ol>
-      <li>Öppna Gmail (info@inflowstudio.se) och klicka på <b>Skriv</b>, eller svara på anmälningsmejlet.</li>
+      <li>Öppna Gmail (info@inflowstudio.se) och klicka på <b>Skriv</b>.</li>
+      <li>I kalkylarket: klicka på <b>InFlow → Uppdatera mejllistor</b>, kopiera gruppens adresser i fliken <b>Mejllistor</b> och klistra in dem i <b>Hemlig kopia (Bcc)</b>, aldrig i Till eller Kopia. Skriv er egen adress i Till.</li>
       <li>Klicka på <b>Kopiera ämnesraden</b> och klistra in i ämnesfältet med <b>Ctrl+V</b>.</li>
       <li>Klicka på <b>Kopiera mejlet</b>, klicka i textfältet i Gmail och klistra in med <b>Ctrl+V</b>.</li>
       <li>Läs igenom och skicka. Mallen har redan er gemensamma signatur, så välj "Ingen signatur" i Gmail om den annars hamnar dubbelt.</li>
@@ -82,7 +76,9 @@
 // ===== Course details. Edit here when something changes. ==================
 // start: the first lesson, written out. price: what the family pays (incl. moms).
 const COURSES = [
-  { name: "Vårtermin i Ekängen, födda 2019–2020", time: "Söndagar kl. 16:15–17:00", place: "Bärstadskolans gymnastiksal, Linköping",
+  { name: "Vårtermin i Ekängen, födda 2019", time: "Söndagar kl. 13:10–13:55", place: "Bärstadskolans gymnastiksal, Linköping",
+    start: "Söndag 7 mars (vecka 9)", sessions: "12 tillfällen", teachers: "Linnea och Alice", price: "1 275 kr" },
+  { name: "Vårtermin i Ekängen, födda 2020", time: "Söndagar kl. 16:15–17:00", place: "Bärstadskolans gymnastiksal, Linköping",
     start: "Söndag 7 mars (vecka 9)", sessions: "12 tillfällen", teachers: "Linnea och Alice", price: "1 275 kr" },
   { name: "Vårtermin i Ekängen, födda 2017–2018", time: "Fredagar kl. 16:00–16:50", place: "Ekängsskolans gymnastiksal, Linköping",
     start: "Fredag 5 mars (vecka 9)", sessions: "12 tillfällen", teachers: "Linnea och Alice", price: "1 325 kr" },
@@ -104,7 +100,6 @@ const FONT = "font-family:Arial,Helvetica,sans-serif;";
 const p = (html) => `<p style="${FONT}font-size:15px;line-height:23px;color:${C.text};margin:0 0 14px;">${html}</p>`;
 const h = (text) => `<p style="font-family:Georgia,'Times New Roman',serif;font-size:18px;color:${C.brown};margin:22px 0 8px;">${text}</p>`;
 const link = (href, text) => `<a href="${href}" style="color:${C.brown};text-decoration:underline;">${text}</a>`;
-const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
 function factsTable(c) {
   const row = (label, value, last) =>
@@ -135,11 +130,11 @@ const signature =
 
 const TEMPLATES = {
   plats: {
-    subject: (c, child) => `Välkommen till InFlow STUDIO – ${child} har fått en plats!`,
-    body: (c, child, parent) =>
+    subject: (c) => `Välkommen till InFlow STUDIO – ditt barn har fått en plats!`,
+    body: (c) =>
       header +
-      p(`Hej ${parent}!`) +
-      p(`Vad roligt att ${child} vill dansa med oss! Vi bekräftar härmed att ${child} har fått en plats i <strong>${c.name}</strong>.`) +
+      p(`Hej!`) +
+      p(`Vad roligt att ni vill dansa med oss! Vi bekräftar härmed att ditt barn har fått en plats i <strong>${c.name}</strong>.`) +
       factsTable(c) +
       h("Betalning") +
       p(`Vi skickar en faktura till den faktureringsadress du angav i anmälan. Betala senast det förfallodatum som står på fakturan, så är platsen klar.`) +
@@ -147,18 +142,18 @@ const TEMPLATES = {
       p(`Ta med en vattenflaska och sköna kläder som man kan röra sig fritt i. Vi dansar i rena inneskor eller i strumpor.`) +
       h("Ångerrätt och villkor") +
       p(`Du har 14 dagars ångerrätt räknat från i dag, när du får den här bekräftelsen. Vill du ångra platsen svarar du bara på det här mejlet. Våra villkor, bland annat om sjukdom, skada eller flytt, hittar du på ${link("https://inflowstudio.se/information.html", "inflowstudio.se/information")}.`) +
-      p(`Har du frågor är det bara att svara på det här mejlet. Vi ser fram emot att dansa med ${child}!`) +
+      p(`Har du frågor är det bara att svara på det här mejlet. Vi ser fram emot att dansa med er!`) +
       p(`Varma hälsningar`) +
       signature,
   },
   ko: {
-    subject: (c, child) => `${child} står på kö till ${c.name}`,
-    body: (c, child, parent) =>
+    subject: (c) => `Ditt barn står på kö till ${c.name}`,
+    body: (c) =>
       header +
-      p(`Hej ${parent}!`) +
-      p(`Tack för din intresseanmälan till <strong>${c.name}</strong>! Just nu är gruppen tyvärr full, men ${child} står på vår kölista.`) +
+      p(`Hej!`) +
+      p(`Tack för din intresseanmälan till <strong>${c.name}</strong>! Just nu är gruppen tyvärr full, men ditt barn står på vår kölista.`) +
       p(`Så fort en plats blir ledig hör vi av oss i turordning. Om tillräckligt många står på kö kan vi också öppna en ny grupp.`) +
-      p(`Du behöver inte göra något just nu. Vill du ta bort ${child} från kön svarar du bara på det här mejlet.`) +
+      p(`Du behöver inte göra något just nu. Vill du ta bort ditt barn från kön svarar du bara på det här mejlet.`) +
       p(`Under tiden kan du följa oss på ${link("https://www.instagram.com/inflow___studio", "Instagram")} för att se vad som händer i studion.`) +
       p(`Varma hälsningar`) +
       signature,
@@ -172,13 +167,9 @@ COURSES.forEach((c, i) => $("course").add(new Option(c.name, i)));
 
 function render() {
   const c = COURSES[$("course").value];
-  const child = esc($("child").value.trim()) || "[barnets namn]";
-  const parent = esc($("parent").value.trim()) || "[vårdnadshavare]";
   const t = TEMPLATES[kind];
-  $("subject").innerHTML = t.subject(c, child);
-  $("preview").innerHTML = t.body(c, child, parent);
-  $("warn").textContent = (!$("child").value.trim() || !$("parent").value.trim())
-    ? "Fyll i barnets och vårdnadshavarens namn innan du kopierar." : "";
+  $("subject").innerHTML = t.subject(c);
+  $("preview").innerHTML = t.body(c);
 }
 
 document.querySelectorAll(".kind button").forEach((b) => b.addEventListener("click", () => {
@@ -186,7 +177,7 @@ document.querySelectorAll(".kind button").forEach((b) => b.addEventListener("cli
   document.querySelectorAll(".kind button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
   render();
 }));
-["course", "child", "parent"].forEach((id) => $(id).addEventListener("input", render));
+$("course").addEventListener("input", render);
 
 // Copy as formatted text, the same as selecting it with the mouse and pressing Ctrl+C
 function copyElement(el, message) {
