@@ -41,6 +41,14 @@ Edit it in the Apps Script editor (and copy the change back into
 Version: Ny version/New version → Implementera/Deploy**. The URL stays the
 same, so the website doesn't need changing.
 
+## Splitting a group
+When a group is split (e.g. "Vt Ekängen, födda 2019-2020" into 2019 and
+2020), change the group's course files first so the website shows the new
+groups. Then set `SPLIT` in `formular.gs`, paste the script into the Apps
+Script editor, save, reload the sheet and click **InFlow → Dela upp grupp
+efter födelseår**. The sign-ups are copied into one tab per new group by
+"Födelseår", and the old tab is kept as "Gammal – …".
+
 ## Switching to info@inflowstudio.se later
 Change `NOTIFY_EMAIL` in the script and deploy a new version as above.
 

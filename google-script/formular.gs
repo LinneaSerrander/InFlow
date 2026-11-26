@@ -179,12 +179,15 @@ function sheetUrl() {
 
 const MAIL_SHEET = "Mejllistor";
 const NOT_SIGNUP_SHEETS = ["Meddelanden", MAIL_SHEET];
+// Tabs whose name starts with this are old copies, left out of Mejllistor
+const OLD_PREFIX = "Gammal – ";
 
 // Runs by itself when the sheet is opened
 function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu("InFlow")
     .addItem("Uppdatera mejllistor", "uppdateraMejllistor")
+    .addItem("Dela upp grupp efter födelseår", "delaUppGrupp")
     .addToUi();
 }
 
@@ -195,7 +198,7 @@ function uppdateraMejllistor() {
   const allSignedUp = new Set();
 
   for (const sheet of spreadsheet.getSheets()) {
-    if (NOT_SIGNUP_SHEETS.includes(sheet.getName())) continue;
+    if (NOT_SIGNUP_SHEETS.includes(sheet.getName()) || sheet.getName().startsWith(OLD_PREFIX)) continue;
     const values = sheet.getDataRange().getDisplayValues();
     if (values.length < 2) continue;
 
@@ -258,6 +261,73 @@ function uppdateraMejllistor() {
   sheet.getRange(top + 1, 5, rows.length, 1).setWrap(true);
   sheet.setFrozenRows(top);
   spreadsheet.setActiveSheet(sheet);
+}
+
+// ===== Dela upp grupp =========================================================
+//
+// "InFlow → Dela upp grupp efter födelseår" moves the sign-ups of a group that
+// has been split into one tab per new group, by the column "Födelseår".
+// The new tabs get the same name as the groups on the website, so later
+// sign-ups land in the right tab. The old tab is kept, renamed with
+// "Gammal – " in front, so nothing is lost. Change SPLIT for a new split.
+
+const SPLIT = {
+  from: "Vt Ekängen, födda 2019-2020",
+  to: { "2019": "Vt Ekängen, födda 2019", "2020": "Vt Ekängen, födda 2020" },
+};
+
+function delaUppGrupp() {
+  const ui = SpreadsheetApp.getUi();
+  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  const old = spreadsheet.getSheetByName(SPLIT.from);
+  if (!old) {
+    ui.alert(`Hittar ingen flik som heter "${SPLIT.from}". Är gruppen redan uppdelad? ` +
+             `Då finns den gamla fliken kvar som "${OLD_PREFIX}${SPLIT.from}".`);
+    return;
+  }
+  const values = old.getDataRange().getValues();
+  const headings = values[0].map((h) => String(h).trim().toLowerCase());
+  const yearCol = headings.indexOf("födelseår");
+  const groupCol = headings.indexOf("grupp");
+  if (yearCol < 0) {
+    ui.alert(`Fliken "${SPLIT.from}" har ingen kolumn som heter Födelseår.`);
+    return;
+  }
+  const byGroup = {};
+  const unknown = [];
+  for (const row of values.slice(1)) {
+    if (row.every((v) => v === "")) continue;
+    const name = SPLIT.to[String(row[yearCol]).trim()];
+    if (!name) { unknown.push(row); continue; }
+    const copy = row.slice();
+    if (groupCol >= 0) copy[groupCol] = name;
+    (byGroup[name] = byGroup[name] || []).push(copy);
+  }
+  const counts = Object.values(SPLIT.to).map((name) => `${name}: ${(byGroup[name] || []).length} st`);
+  const extra = unknown.length
+    ? `\n\n${unknown.length} anmälningar har ett annat födelseår och flyttas inte. De finns kvar i den gamla fliken.`
+    : "";
+  const answer = ui.alert("Dela upp gruppen",
+    `Anmälningarna i "${SPLIT.from}" kopieras till nya flikar:\n\n${counts.join("\n")}${extra}\n\n` +
+    `Den gamla fliken byter namn till "${OLD_PREFIX}${SPLIT.from}" och får vara kvar. Fortsätta?`,
+    ui.ButtonSet.OK_CANCEL);
+  if (answer !== ui.Button.OK) return;
+
+  for (const name of Object.values(SPLIT.to)) {
+    let sheet = spreadsheet.getSheetByName(name);
+    if (!sheet) {
+      sheet = spreadsheet.insertSheet(name, old.getIndex());
+      sheet.getRange(1, 1, 1, values[0].length).setValues([values[0]]).setFontWeight("bold");
+      sheet.setFrozenRows(1);
+    }
+    const rows = byGroup[name] || [];
+    if (rows.length) {
+      sheet.getRange(sheet.getLastRow() + 1, 1, rows.length, rows[0].length).setValues(rows);
+    }
+  }
+  old.setName(OLD_PREFIX + SPLIT.from);
+  uppdateraMejllistor();
+  ui.alert("Klart! Kolla gärna de nya flikarna. Mejllistorna är uppdaterade.");
 }
 
 // Run this once from the Apps Script editor (select it, click ▶ Kör/Run) to
