@@ -75,11 +75,24 @@
 <script>
 // ===== Course details. Edit here when something changes. ==================
 // start: the first lesson, written out. price: what the family pays (incl. moms).
+// intro (optional): own opening paragraphs for "Plats bekräftad", shown instead
+// of the usual greeting, before the info box. One string per paragraph.
+const MAIL = `<a href="mailto:info@inflowstudio.se" style="color:#6b4f3f;text-decoration:underline;">info@inflowstudio.se</a>`;
 const COURSES = [
   { name: "Vårtermin i Ekängen, födda 2019", time: "Söndagar kl. 13:10–13:55", place: "Bärstadskolans gymnastiksal, Linköping",
-    start: "Söndag 7 mars (vecka 9)", sessions: "12 tillfällen", teachers: "Linnea och Alice", price: "1 275 kr" },
+    start: "Söndag 7 mars (vecka 9)", sessions: "12 tillfällen", teachers: "Linnea och Alice", price: "1 275 kr",
+    intro: [
+      "Hej!",
+      "Vad roligt att ni vill dansa med oss! Det har kommit in så många anmälningar till gruppen för födda 2019–2020 att vi har valt att dela den i två grupper, en för födda 2019 och en för födda 2020.",
+      "Ditt barn dansar därför i den nya gruppen för födda 2019, på söndagar kl. 13.10–13.55.",
+      `Om den nya tiden inte passar, eller om ni har några frågor, maila oss gärna på ${MAIL}, då försöker vi hitta en lösning tillsammans!`,
+    ] },
   { name: "Vårtermin i Ekängen, födda 2020", time: "Söndagar kl. 16:15–17:00", place: "Bärstadskolans gymnastiksal, Linköping",
-    start: "Söndag 7 mars (vecka 9)", sessions: "12 tillfällen", teachers: "Linnea och Alice", price: "1 275 kr" },
+    start: "Söndag 7 mars (vecka 9)", sessions: "12 tillfällen", teachers: "Linnea och Alice", price: "1 275 kr",
+    intro: [
+      "Hej!",
+      "Vad roligt att ni vill dansa med oss! Det har kommit in så många anmälningar att vi har delat gruppen för födda 2019–2020 i två grupper. Ditt barn är fött 2020 och dansar som planerat på söndagar kl. 16.15–17.00 i Bärstadskolan. Ingenting ändras för er.",
+    ] },
   { name: "Vårtermin i Ekängen, födda 2017–2018", time: "Fredagar kl. 16:00–16:50", place: "Ekängsskolans gymnastiksal, Linköping",
     start: "Fredag 5 mars (vecka 9)", sessions: "12 tillfällen", teachers: "Linnea och Alice", price: "1 325 kr" },
   { name: "Vårtermin i Ekängen, födda 2014–2016", time: "Söndagar kl. 15:00–16:00", place: "Ekängsskolans gymnastiksal, Linköping",
@@ -133,8 +146,10 @@ const TEMPLATES = {
     subject: (c) => `Välkommen till InFlow STUDIO – ditt barn har fått en plats!`,
     body: (c) =>
       header +
-      p(`Hej!`) +
-      p(`Vad roligt att ni vill dansa med oss! Vi bekräftar härmed att ditt barn har fått en plats i <strong>${c.name}</strong>.`) +
+      (c.intro
+        ? c.intro.map(p).join("")
+        : p(`Hej!`) +
+          p(`Vad roligt att ni vill dansa med oss! Vi bekräftar härmed att ditt barn har fått en plats i <strong>${c.name}</strong>.`)) +
       factsTable(c) +
       h("Betalning") +
       p(`Vi skickar en faktura till den faktureringsadress du angav i anmälan. Betala senast det förfallodatum som står på fakturan, så är platsen klar.`) +
