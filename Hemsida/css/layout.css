@@ -405,7 +405,9 @@
   border-radius: 999px;
   font-size: var(--text-sm);
   font-weight: 500;
-  white-space: nowrap;
+  /* Long texts (e.g. the red one) wrap on narrow phones instead of sticking out */
+  max-width: 100%;
+  line-height: 1.3;
 }
 
 .status::before {
