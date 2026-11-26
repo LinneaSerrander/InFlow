@@ -3,7 +3,8 @@
 #
 # 1. Bundles the course files: Kurser/*/schedule.yaml -> Hemsida/data/kurser.json
 # 2. Copies only the website files (no .claude/ or tools/) into _site/
-# 3. Publishes _site/ to GitHub Pages
+# 3. Adds ?v=<commit> to the CSS/JS links, so browsers fetch the new files
+# 4. Publishes _site/ to GitHub Pages
 name: Publicera hemsidan
 
 on:
@@ -43,6 +44,14 @@ jobs:
             --exclude '__pycache__/' \
             Hemsida/ _site/
           echo "Published files:" && find _site -type f | sort
+
+      # css/x.css -> css/x.css?v=<commit>, so visitors' browsers fetch the new
+      # CSS/JS right after a publish instead of using an old saved copy
+      - name: Version the CSS and JS links
+        run: |
+          v="${GITHUB_SHA::7}"
+          sed -i -E "s#(href|src)=\"((css|js)/[^\"?]+\.(css|js))\"#\1=\"\2?v=$v\"#g" _site/*.html
+          grep -ho '\(href\|src\)="\(css\|js\)/[^"]*"' _site/*.html | sort -u
 
       - uses: actions/configure-pages@v5
 
