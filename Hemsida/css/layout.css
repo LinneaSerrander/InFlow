@@ -368,6 +368,61 @@
   margin-top: var(--space-1);
 }
 
+/* News on the start page: a colored box with one big heading */
+.news__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 11rem;
+  padding: var(--space-5);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.news__item h3 {
+  font-size: var(--text-xl);
+  line-height: 1.25;
+  color: inherit;
+}
+
+.news--brown {
+  background: var(--color-brown);
+  color: #ffffff;
+}
+
+.news--gold {
+  background: var(--color-divider);
+  color: var(--color-black);
+}
+
+/* Brighter ones */
+.news--coral {
+  background: #d9542f;
+  color: #ffffff;
+}
+
+.news--sun {
+  background: #f6c445;
+  color: var(--color-black);
+}
+
+/* Pastel ones */
+.news--pink {
+  background: #fbdde2;
+  color: var(--color-black);
+}
+
+.news--blue {
+  background: #d4e8f7;
+  color: var(--color-black);
+}
+
+.news--mint {
+  background: #c6e6d4;
+  color: var(--color-black);
+}
+
 /* Course overview (Kurser page): one course per row, text on the left and
    an optional picture (.course__image) on the right */
 .courses {
