@@ -368,16 +368,28 @@
   margin-top: var(--space-1);
 }
 
-/* News on the start page: a colored box with one big heading */
+/* News on the start page: a colored box with one big heading and a thin
+   frame inside it. The frame's color is --news-frame (set per color below). */
 .news__item {
+  --news-frame: var(--color-divider);
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 11rem;
-  padding: var(--space-5);
-  border-radius: var(--radius);
+  padding: calc(var(--space-5) + 0.75rem);
+  border-radius: 0.875rem;
   box-shadow: var(--shadow);
   text-align: center;
+}
+
+.news__item::before {
+  content: "";
+  position: absolute;
+  inset: 0.625rem;
+  border: 1.5px solid var(--news-frame);
+  border-radius: 0.5rem;
+  pointer-events: none;
 }
 
 .news__item h3 {
@@ -414,11 +426,13 @@
 }
 
 .news--blue {
+  --news-frame: #2b5276; /* dark blue */
   background: #d4e8f7;
   color: var(--color-black);
 }
 
 .news--mint {
+  --news-frame: #2c6346; /* dark green */
   background: #c6e6d4;
   color: var(--color-black);
 }
