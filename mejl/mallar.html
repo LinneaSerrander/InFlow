@@ -66,7 +66,7 @@
       <li>I kalkylarket: klicka på <b>InFlow → Uppdatera mejllistor</b>, kopiera gruppens adresser i fliken <b>Mejllistor</b> och klistra in dem i <b>Hemlig kopia (Bcc)</b>, aldrig i Till eller Kopia. Skriv er egen adress i Till.</li>
       <li>Klicka på <b>Kopiera ämnesraden</b> och klistra in i ämnesfältet med <b>Ctrl+V</b>.</li>
       <li>Klicka på <b>Kopiera mejlet</b>, klicka i textfältet i Gmail och klistra in med <b>Ctrl+V</b>.</li>
-      <li>Läs igenom och skicka. Mallen har redan er gemensamma signatur, så välj "Ingen signatur" i Gmail om den annars hamnar dubbelt.</li>
+      <li>Läs igenom och skicka. Signaturen läggs till av Gmail, den finns inte i mallen.</li>
     </ol>
     <p class="warn">Kursuppgifterna (tider, platser, priser, startdatum) står längst ner i den här filen, i listan <code>COURSES</code>. Ändra där om något ändras.</p>
   </div>
@@ -132,17 +132,6 @@ const header =
   `<a href="https://inflowstudio.se"><img src="https://inflowstudio.se/assets/images/logo-mejl.png" width="160" height="89" alt="InFlow STUDIO" style="display:block;border:0;"></a>` +
   `</td></tr></table>`;
 
-const signature =
-  `<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;${FONT}color:${C.text};margin-top:8px;"><tr>` +
-  `<td style="padding:0 0 0 14px;border-left:2px solid ${C.gold};vertical-align:middle;font-size:13px;line-height:20px;">` +
-  `<span style="font-family:Georgia,'Times New Roman',serif;font-size:17px;color:${C.text};">Linnea &amp; Alice</span><br>` +
-  `<span style="color:${C.brown};">InFlow STUDIO</span><br>` +
-  `<span style="color:${C.muted};">Dans, träning och hälsa · Linköping &amp; Åtvidaberg</span><br>` +
-  `<a href="tel:+46722392001" style="color:${C.text};text-decoration:none;">Linnea 072-239 20 01</a> · <a href="tel:+46707683598" style="color:${C.text};text-decoration:none;">Alice 070-768 35 98</a><br>` +
-  `<a href="https://inflowstudio.se" style="color:${C.brown};text-decoration:none;">inflowstudio.se</a> · ` +
-  `<a href="https://www.instagram.com/inflow___studio" style="color:${C.brown};text-decoration:none;">Instagram: @inflow___studio</a>` +
-  `</td></tr></table>`;
-
 const TEMPLATES = {
   plats: {
     subject: (c) => `Välkommen till InFlow STUDIO – ditt barn har fått en plats!`,
@@ -154,14 +143,13 @@ const TEMPLATES = {
           p(`Vad roligt att ni vill dansa med oss! Vi bekräftar härmed att ditt barn har fått en plats i <strong>${c.name}</strong>.`)) +
       factsTable(c) +
       h("Betalning") +
-      p(`Vi skickar en faktura till den faktureringsadress du angav i anmälan. Betala senast det förfallodatum som står på fakturan, så är platsen klar.`) +
+      p(`Vi skickar en faktura i samband med kursstart. Betala senast det förfallodatum som står på fakturan.`) +
       h("Inför första lektionen") +
       p(`Ta med en vattenflaska och sköna kläder som man kan röra sig fritt i. Vi dansar i rena inneskor eller i strumpor.`) +
       h("Ångerrätt och villkor") +
-      p(`Du har 14 dagars ångerrätt räknat från i dag, när du får den här bekräftelsen. Vill du ångra platsen svarar du bara på det här mejlet. Våra villkor, bland annat om sjukdom, skada eller flytt, hittar du på ${link("https://inflowstudio.se/information.html", "inflowstudio.se/information")}.`) +
+      p(`Du har 14 dagars ångerrätt räknat från idag, när du får den här bekräftelsen. Vill du ångra platsen svarar du bara på det här mejlet. Våra villkor, bland annat om sjukdom, skada eller flytt, hittar du på ${link("https://inflowstudio.se/information.html", "inflowstudio.se/information")}.`) +
       p(`Har du frågor är det bara att svara på det här mejlet. Vi ser fram emot att dansa med er!`) +
-      p(`Varma hälsningar`) +
-      signature,
+      p(`Varma hälsningar`),
   },
   ko: {
     subject: (c) => `Ditt barn står på kö till ${c.name}`,
@@ -172,8 +160,7 @@ const TEMPLATES = {
       p(`Så fort en plats blir ledig hör vi av oss i turordning. Om tillräckligt många står på kö kan vi också öppna en ny grupp.`) +
       p(`Du behöver inte göra något just nu. Vill du ta bort ditt barn från kön svarar du bara på det här mejlet.`) +
       p(`Under tiden kan du följa oss på ${link("https://www.instagram.com/inflow___studio", "Instagram")} för att se vad som händer i studion.`) +
-      p(`Varma hälsningar`) +
-      signature,
+      p(`Varma hälsningar`),
   },
 };
 
